@@ -1,0 +1,9 @@
+# OS GENERATED FILES
+.DS_Store
+.DS_Store?
+
+# NODE
+node_modules
+npm-debug.log
+web/service-worker.js
+yarn-error.log
