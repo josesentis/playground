@@ -58,9 +58,13 @@ var currentX = 0;
 var currentZ = 0;
 var cityWidth = NCOLS * BOX_SIZE;
 
-var textureBuilding = textureLoader.load('building.jpg');
+var textureBuilding = textureLoader.load(
+  'https://github.com/josesentis15/creative-coding-lab/blob/master/03-city/building.jpg'
+);
+textureBuilding.wrapS = textureBuilding.wrapT = THREE.RepeatWrapping;
+textureBuilding.repeat.set(8, 8);
+
 var boxMaterial = new THREE.MeshStandardMaterial({
-  color: 0xff0000,
   map: textureBuilding,
   metalness: 0.25,
   roughness: 0.4
