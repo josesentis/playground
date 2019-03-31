@@ -1,20 +1,23 @@
-/*
-Lights
-*/
 var renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-renderer.setSize(512, 512);
+var container = document.querySelector('.container');
+var textureLoader = new THREE.TextureLoader();
+
+renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.setClearColor(0xffffff, 0);
 renderer.setPixelRatio(window.devicePixelRatio || 1);
 renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap; //THREE.BasicShadowMap;
 
-var container = document.querySelector('.container');
-
 container.appendChild(renderer.domElement);
 
 var scene = new THREE.Scene();
 // var camera = new THREE.OrthographicCamera(-256,256,256,-256, 0.00001, 100000); // left, right, top, bottom
-var camera = new THREE.PerspectiveCamera(75, 1, 0.001, 10000);
+var camera = new THREE.PerspectiveCamera(
+  75,
+  window.innerWidth / window.innerHeight,
+  0.001,
+  10000
+);
 camera.position.z = 800;
 camera.position.y = 400;
 camera.position.x = -400;
@@ -22,29 +25,54 @@ camera.lookAt(new THREE.Vector3());
 scene.add(camera);
 
 // --- ADD OBJECTS TO SCENE -------------------------------------------
-var material = new THREE.MeshStandardMaterial({
+// Adds floor
+var texturePlane = textureLoader.load(
+  'https://raw.githubusercontent.com/mrdoob/three.js/master/examples/textures/terrain/grasslight-big.jpg'
+);
+
+texturePlane.wrapS = texturePlane.wrapT = THREE.RepeatWrapping;
+texturePlane.repeat.set(8, 8);
+
+var floor = new THREE.Mesh(
+  new THREE.PlaneGeometry(2000, 2000, 8, 8),
+  new THREE.MeshBasicMaterial({
+    map: texturePlane,
+    side: THREE.DoubleSide,
+    roughness: 0.9
+  })
+);
+
+floor.rotation.x = -Math.PI / 2;
+floor.receiveShadow = true;
+
+scene.add(floor);
+
+// Adds city
+var N_BOXES = 40;
+var BOX_SIZE = 50;
+var BOX_HEIGHT = 300;
+var NCOLS = 8;
+var boxes = [];
+var height;
+var currentX = 0;
+var currentZ = 0;
+var cityWidth = NCOLS * BOX_SIZE;
+
+var textureBuilding = textureLoader.load('building.jpg');
+var boxMaterial = new THREE.MeshStandardMaterial({
   color: 0xff0000,
+  map: textureBuilding,
   metalness: 0.25,
   roughness: 0.4
 });
-// var geometry = new THREE.BoxGeometry(80,200,80);
-// var box = new THREE.Mesh(geometry, material);
-// scene.add(box);
-
-var N_BOXES = 40;
-var boxes = [];
-var height;
-var currentX,
-  currentZ = 0;
-var BOX_SIZE = 50;
-var BOX_HEIGHT = 300;
+var boxGeometry = new THREE.BoxBufferGeometry(1, 1, 1);
 
 for (var i = 0; i < N_BOXES; i++) {
   height = Math.floor(Math.random() * BOX_HEIGHT) + 50;
 
-  boxes[i] = new THREE.Mesh(new THREE.BoxBufferGeometry(1, 1, 1), material);
+  boxes[i] = new THREE.Mesh(boxGeometry, boxMaterial);
 
-  boxes[i].position.x = ((i % 10) * BOX_SIZE) - (5 * BOX_SIZE);
+  boxes[i].position.x = (i % NCOLS) * BOX_SIZE - cityWidth / 2;
   boxes[i].position.y = height / 2;
   boxes[i].position.z = currentZ;
 
@@ -55,7 +83,9 @@ for (var i = 0; i < N_BOXES; i++) {
   boxes[i].height = height;
   boxes[i].delay = Math.random() * 2 * Math.PI;
 
-  if (i % 5 === 4) {
+  boxes[i].castShadow = true;
+
+  if (i % NCOLS === NCOLS - 1) {
     currentZ += BOX_SIZE;
   }
 
@@ -101,7 +131,7 @@ var ambient = new THREE.AmbientLight(0xeeeeee);
 scene.add(ambient);
 
 var sun = new THREE.DirectionalLight(0xfaf7d7, 1);
-sun.position.set(500, 300, 0);
+sun.position.set(1000, 500, 0);
 sun.target.position.set(0, 0, 0);
 sun.castShadow = true;
 
@@ -115,7 +145,6 @@ sun.shadow.mapSize.width = 1024;
 sun.shadow.mapSize.height = 1024;
 
 scene.add(sun);
-
 // var shadowHelper = new THREE.CameraHelper(sun.shadow.camera);
 // scene.add(shadowHelper);
 
@@ -131,7 +160,7 @@ scene.add(sun);
 // scene.add(spotHelper);
 
 // --- INTERACTION STUFF -----------------------------------------------------------
-// var controls = new THREE.OrbitControls(camera, container);
+var controls = new THREE.OrbitControls(camera, container);
 // controls.autoRotate = true;
 // controls.autoRotateSpeed = 0.2;
 // controls.enableDamping = true;
@@ -158,7 +187,6 @@ scene.add(sun);
 // }
 
 // --- ANIMATION & RENDER STUFF ----------------------------------------------------
-
 var clock = new THREE.Clock(true);
 
 // function interact() {

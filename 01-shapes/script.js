@@ -15,9 +15,9 @@
 
   scene.add(shape);
   camera.position.z = 4;
-  shape.rotation.x = 0.3
+  shape.rotation.x = 0.3;
 
-  var render = function () {
+  var render = function() {
     requestAnimationFrame(render);
     shape.rotation.y += 0.01;
     //shape.rotation.x += 0.003;
