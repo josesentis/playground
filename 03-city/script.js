@@ -59,7 +59,7 @@ var currentZ = 0;
 var cityWidth = NCOLS * BOX_SIZE;
 
 var textureBuilding = textureLoader.load(
-  'https://github.com/josesentis15/creative-coding-lab/blob/master/03-city/building.jpg'
+  'building.jpg'
 );
 textureBuilding.wrapS = textureBuilding.wrapT = THREE.RepeatWrapping;
 textureBuilding.repeat.set(8, 8);
