@@ -39,7 +39,7 @@ var init = function() {
 
   var floor = new THREE.Mesh(
     new THREE.PlaneGeometry(2000, 2000),
-    new THREE.MeshBasicMaterial({
+    new THREE.MeshStandardMaterial({
       map: texturePlane,
       side: THREE.DoubleSide,
       roughness: 0.9
@@ -163,34 +163,23 @@ var init = function() {
   scene.add(ambient);
 
   var sun = new THREE.DirectionalLight(0xfaf7d7, 1);
-  sun.position.set(1000, 500, 0);
+  sun.position.set(2000, 3000, 4000);
   sun.target.position.set(0, 0, 0);
   sun.castShadow = true;
 
   sun.shadow.camera.near = 1;
-  sun.shadow.camera.far = 1000;
-  sun.shadow.camera.right = 512;
-  sun.shadow.camera.left = -512;
-  sun.shadow.camera.top = 512;
-  sun.shadow.camera.bottom = -512;
+  sun.shadow.camera.far = 7000;
+  sun.shadow.camera.right = 1024;
+  sun.shadow.camera.left = -1024;
+  sun.shadow.camera.top = 1024;
+  sun.shadow.camera.bottom = -1024;
   sun.shadow.mapSize.width = 1024;
   sun.shadow.mapSize.height = 1024;
 
   scene.add(sun);
 
-  // var shadowHelper = new THREE.CameraHelper(sun.shadow.camera);
-  // scene.add(shadowHelper);
-
-  // var spot = new THREE.SpotLight(0xff3333, 0.8, 500, Math.PI / 4);
-  // spot.castShadow = true;
-  // spot.penumbra = 0.8;
-  // spot.decay = 0.4;
-  // spot.position.set(-200, 300, -200);
-  // spot.target.position.set(0, 50, 0);
-  // scene.add(spot);
-
-  // var spotHelper = new THREE.SpotLightHelper(spot);
-  // scene.add(spotHelper);
+  var shadowHelper = new THREE.CameraHelper(sun.shadow.camera);
+  scene.add(shadowHelper);
 
   // --- INTERACTION STUFF -----------------------------------------------------------
   var controls = new THREE.OrbitControls(camera, container);
