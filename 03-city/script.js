@@ -1,7 +1,10 @@
 var scene, container, camera, renderer;
 
-var init = function() {
-  renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+var init = function () {
+  renderer = new THREE.WebGLRenderer({
+    alpha: true,
+    antialias: true
+  });
   container = document.querySelector('.container');
   var textureLoader = new THREE.TextureLoader();
 
@@ -35,7 +38,7 @@ var init = function() {
   );
 
   texturePlane.wrapS = texturePlane.wrapT = THREE.RepeatWrapping;
-  texturePlane.repeat.set(1, 1);
+  texturePlane.repeat.set(52, 52);
 
   var floor = new THREE.Mesh(
     new THREE.PlaneGeometry(2000, 2000),
@@ -53,10 +56,10 @@ var init = function() {
 
   // Adds buildings and streets
   var N_BOXES = 40;
-  var BOX_SIZE = 50;
-  var BOX_HEIGHT = 300;
+  var BOX_SIZE = 80;
+  var BOX_HEIGHT = 500;
   var NCOLS = 8;
-  var STREETSIZE = 40;
+  var STREETSIZE = 60;
   var boxes = [];
   var streets = [];
   var height;
@@ -79,7 +82,7 @@ var init = function() {
   var boxGeometry = new THREE.BoxBufferGeometry(1, 1, 1);
 
   for (var i = 0; i < N_BOXES; i++) {
-    height = Math.floor(Math.random() * BOX_HEIGHT) + 50;
+    height = Math.floor(Math.random() * BOX_HEIGHT) + 100;
 
     boxes[i] = new THREE.Mesh(boxGeometry, boxMaterial);
 
@@ -123,40 +126,6 @@ var init = function() {
     scene.add(boxes[i]);
     scene.add(streets[i]);
   }
-
-  // var tl = new THREE.TextureLoader();
-  // var texture = tl.load('img/floor.jpg');
-  // texture.repeat.set(4, 4);
-  // texture.wrapS = THREE.RepeatWrapping;
-  // texture.wrapT = THREE.RepeatWrapping;
-
-  // var floor = new THREE.Mesh(
-  //   new THREE.PlaneBufferGeometry(1024, 1024),
-  //   new THREE.MeshStandardMaterial({
-  //     color: 0xcccccc,
-  //     map: texture,
-  //     side: THREE.DoubleSide,
-  //     roughness: 0.9,
-  //     metalness: 0.6
-  //   })
-  // );
-
-  // floor.rotation.x = -Math.PI / 2;
-  // floor.receiveShadow = true;
-
-  // scene.add(floor);
-
-  // var torus = new THREE.Mesh(
-  //   new THREE.TorusKnotBufferGeometry(60, 14, 128, 128, 2, 5),
-  //   new THREE.MeshStandardMaterial({
-  //     color: 0x3464c9,
-  //     metalness: 0.25,
-  //     roughness: 0.4
-  //   })
-  // );
-  // torus.position.y = 140;
-  // scene.add(torus);
-  // torus.castShadow = true;
 
   // --- SETUP LIGHTS ----------------------------------------------------------------
   var ambient = new THREE.AmbientLight(0xeeeeee);
@@ -206,7 +175,7 @@ var init = function() {
   // }
 };
 
-var updateHeights = function() {
+var updateHeights = function () {
   var t = clock.getElapsedTime();
 
   for (var i = 0; i < N_BOXES; i++) {
@@ -219,7 +188,7 @@ var updateHeights = function() {
   }
 };
 
-var loop = function() {
+var loop = function () {
   requestAnimationFrame(loop);
   // updateHeights();
   renderer.render(scene, camera);
