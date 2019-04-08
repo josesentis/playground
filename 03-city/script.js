@@ -1,4 +1,9 @@
 var scene, container, camera, renderer;
+var NBOXES = 100;
+var BOX_SIZE = 80;
+var BOX_HEIGHT = 500;
+var NCOLS = 8;
+var STREETSIZE = 100;
 
 var init = function () {
   renderer = new THREE.WebGLRenderer({
@@ -18,16 +23,15 @@ var init = function () {
   container.appendChild(renderer.domElement);
 
   scene = new THREE.Scene();
-  // var camera = new THREE.OrthographicCamera(-256,256,256,-256, 0.00001, 100000); // left, right, top, bottom
   camera = new THREE.PerspectiveCamera(
     75,
     window.innerWidth / window.innerHeight,
     0.001,
     10000
   );
-  camera.position.z = 800;
+  camera.position.z = 1200;
   camera.position.y = 400;
-  camera.position.x = -400;
+  camera.position.x = 300;
   camera.lookAt(new THREE.Vector3());
   scene.add(camera);
 
@@ -41,7 +45,7 @@ var init = function () {
   texturePlane.repeat.set(52, 52);
 
   var floor = new THREE.Mesh(
-    new THREE.PlaneGeometry(2000, 2000),
+    new THREE.PlaneGeometry(4000, 4000),
     new THREE.MeshStandardMaterial({
       map: texturePlane,
       side: THREE.DoubleSide,
@@ -55,48 +59,36 @@ var init = function () {
   scene.add(floor);
 
   // Adds buildings and streets
-  var N_BOXES = 40;
-  var BOX_SIZE = 80;
-  var BOX_HEIGHT = 500;
-  var NCOLS = 8;
-  var STREETSIZE = 60;
   var boxes = [];
   var streets = [];
   var height;
   var currentZ = 0;
-  var cityWidth = NCOLS * BOX_SIZE;
+  var cityWidth = NCOLS * BOX_SIZE + STREETSIZE * (NCOLS - 1);
+  var cityDepth = NBOXES / NCOLS *  BOX_SIZE + STREETSIZE * (NBOXES / NCOLS - 1);
 
   var textureBuilding = textureLoader.load('building.jpg');
   textureBuilding.wrapS = textureBuilding.wrapT = THREE.RepeatWrapping;
-  textureBuilding.repeat.set(4, 4);
+  textureBuilding.anisotropy = 16;
 
   var textureStreet = textureLoader.load('street.jpg');
   textureStreet.wrapS = textureStreet.wrapT = THREE.RepeatWrapping;
-  textureStreet.repeat.set(1, 1);
+  textureStreet.anisotropy = 16;
 
-  var boxMaterial = new THREE.MeshStandardMaterial({
-    map: textureBuilding,
-    metalness: 0.25,
-    roughness: 0.4
-  });
-  var boxGeometry = new THREE.BoxBufferGeometry(1, 1, 1);
-
-  for (var i = 0; i < N_BOXES; i++) {
+  for (var i = 0; i < NBOXES; i++) {
     height = Math.floor(Math.random() * BOX_HEIGHT) + 100;
 
-    boxes[i] = new THREE.Mesh(boxGeometry, boxMaterial);
+    textureBuilding.repeat.set(1, height/BOX_SIZE);
+    boxes[i] = new THREE.Mesh(
+        new THREE.BoxBufferGeometry(BOX_SIZE, height, BOX_SIZE),
+        new THREE.MeshStandardMaterial({
+          map: textureBuilding,
+          metalness: 0.25,
+          roughness: 0.4
+        }));
 
-    boxes[i].position.x = (i % NCOLS) * (BOX_SIZE + STREETSIZE) - cityWidth / 2;
+    boxes[i].position.x = (i % NCOLS) * (BOX_SIZE + STREETSIZE);
     boxes[i].position.y = height / 2;
-    boxes[i].position.z = currentZ;
-
-    boxes[i].scale.x = BOX_SIZE;
-    boxes[i].scale.y = height;
-    boxes[i].scale.z = BOX_SIZE;
-
-    boxes[i].height = height;
-    boxes[i].delay = Math.random() * 2 * Math.PI;
-
+    boxes[i].position.z = currentZ - cityDepth / 2;
     boxes[i].castShadow = true;
 
     streets[i] = new THREE.Mesh(
@@ -112,17 +104,16 @@ var init = function () {
     streets[i].receiveShadow = true;
 
     streets[i].position.x =
-      (i % NCOLS) * (BOX_SIZE + STREETSIZE) - cityWidth / 2 - STREETSIZE;
-    streets[i].position.z = currentZ;
-
-    if (i % NCOLS === 0) {
-      streets[i].visible = false;
-    }
+    (i % NCOLS) * (BOX_SIZE + STREETSIZE) + BOX_SIZE + (STREETSIZE - BOX_SIZE) / 2;
+    streets[i].position.z = currentZ - cityDepth / 2;
 
     if (i % NCOLS === NCOLS - 1) {
+      streets[i].visible = false;
       currentZ += BOX_SIZE + STREETSIZE;
     }
+    var box = new THREE.BoxHelper(boxes[i], 0xffff00 );
 
+    scene.add(box);
     scene.add(boxes[i]);
     scene.add(streets[i]);
   }
@@ -131,7 +122,7 @@ var init = function () {
   var ambient = new THREE.AmbientLight(0xeeeeee);
   scene.add(ambient);
 
-  var sun = new THREE.DirectionalLight(0xfaf7d7, 1);
+  var sun = new THREE.DirectionalLight(0xfaf7d7, 0.5);
   sun.position.set(2000, 3000, 4000);
   sun.target.position.set(0, 0, 0);
   sun.castShadow = true;
@@ -155,42 +146,14 @@ var init = function () {
   // controls.autoRotate = true;
   // controls.autoRotateSpeed = 0.2;
   controls.enableDamping = true;
-  // controls.minPolarAngle = Math.PI / 4;
-  // controls.maxPolarAngle = (3 * Math.PI) / 4;
+  controls.minPolarAngle = Math.PI / 4;
+  controls.maxPolarAngle = Math.PI * 85 / 180;
   // controls.enableZoom = false;
   // controls.enablePan = false;
-
-  // --- ANIMATION & RENDER STUFF ----------------------------------------------------
-  var clock = new THREE.Clock(true);
-
-  // function interact() {
-  //   controls.update();
-  // }
-
-  // function moveLights() {
-  //   var t = clock.getElapsedTime();
-  //   spot.position.set(-200 * Math.sin(t), 300, -200 * Math.cos(t));
-  //   spot.target.position.set(0, 50, 0);
-  //   spotHelper.update();
-  // }
-};
-
-var updateHeights = function () {
-  var t = clock.getElapsedTime();
-
-  for (var i = 0; i < N_BOXES; i++) {
-    var height =
-      boxes[i].height +
-      boxes[i].height * 0.2 * Math.sin(t * 2 + boxes[i].delay);
-
-    boxes[i].scale.y = height;
-    boxes[i].position.y = height / 2;
-  }
 };
 
 var loop = function () {
   requestAnimationFrame(loop);
-  // updateHeights();
   renderer.render(scene, camera);
 };
 
