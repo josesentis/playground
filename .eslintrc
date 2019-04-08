@@ -1,0 +1,6 @@
+{
+  "extends": "@runroom/eslint-config-runroom",
+  "env": {
+    "browser": true
+  }
+}
