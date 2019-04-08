@@ -111,9 +111,7 @@ var init = function () {
       streets[i].visible = false;
       currentZ += BOX_SIZE + STREETSIZE;
     }
-    var box = new THREE.BoxHelper(boxes[i], 0xffff00 );
 
-    scene.add(box);
     scene.add(boxes[i]);
     scene.add(streets[i]);
   }
@@ -138,8 +136,8 @@ var init = function () {
 
   scene.add(sun);
 
-  var shadowHelper = new THREE.CameraHelper(sun.shadow.camera);
-  scene.add(shadowHelper);
+  // var shadowHelper = new THREE.CameraHelper(sun.shadow.camera);
+  // scene.add(shadowHelper);
 
   // --- INTERACTION STUFF -----------------------------------------------------------
   var controls = new THREE.OrbitControls(camera, container);
