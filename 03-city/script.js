@@ -1,4 +1,4 @@
-var scene, container, camera, renderer;
+var camera, container, renderer, scene, sun;
 var NBOXES = 100;
 var BOX_SIZE = 80;
 var BOX_HEIGHT = 500;
@@ -28,9 +28,9 @@ var init = function () {
     0.001,
     10000
   );
-  camera.position.z = 1200;
+  camera.position.z = 1000;
   camera.position.y = 400;
-  camera.position.x = 500;
+  camera.position.x = 900;
   camera.lookAt(new THREE.Vector3());
   scene.add(camera);
 
@@ -64,6 +64,7 @@ var init = function () {
   var cityDepth = NBOXES / NCOLS *  BOX_SIZE + STREETSIZE * (NBOXES / NCOLS - 1);
   var bufferGeometry;
   var buildingMaterial = new THREE.MeshStandardMaterial({ color: 0xf77fee });
+  var nextX, prevX = 0;
 
   for (var i = 0; i < NBOXES; i++) {
     height = Math.floor(Math.random() * BOX_HEIGHT) + 100;
@@ -74,13 +75,18 @@ var init = function () {
 
     boxes[i] = new THREE.Mesh(bufferGeometry, buildingMaterial);
 
-    boxes[i].position.x = (i % NCOLS) * (BOX_SIZE + STREETSIZE * Math.random());
+    var nextX = (i % NCOLS) * (BOX_SIZE + STREETSIZE * Math.random());
+
+    boxes[i].position.x = nextX > prevX + BOX_SIZE ? nextX : prevX + BOX_SIZE + 1;
     boxes[i].position.y = height / 2;
     boxes[i].position.z = currentZ - cityDepth / 2;
     boxes[i].castShadow = true;
 
+    prevX = nextX;
+
     if (i % NCOLS === NCOLS - 1) {
       currentZ += BOX_SIZE + STREETSIZE;
+      nextX = prevX = 0;
     }
 
     scene.add(boxes[i]);
@@ -90,8 +96,8 @@ var init = function () {
   var ambient = new THREE.AmbientLight(0xeeeeee);
   scene.add(ambient);
 
-  var sun = new THREE.DirectionalLight(0xfaf7d7, 0.5);
-  sun.position.set(2000, 3000, 4000);
+  sun = new THREE.DirectionalLight(0xfaf7d7, 0.5);
+  sun.position.set(-2000, 3000, 4000);
   sun.target.position.set(0, 0, 0);
   sun.castShadow = true;
 
@@ -112,16 +118,25 @@ var init = function () {
   // --- INTERACTION STUFF -----------------------------------------------------------
   var controls = new THREE.OrbitControls(camera, container);
   controls.enableDamping = true;
-  controls.minPolarAngle = Math.PI / 4;
+  controls.enableZoom = false;
   controls.maxPolarAngle = Math.PI * 85 / 180;
+  controls.minPolarAngle = Math.PI / 4;
 };
 
 var loop = function () {
   camera.position.z = camera.position.z - 0.5;
+  sun.position.x = camera.position.x + 100;
 
   renderer.render(scene, camera);
   requestAnimationFrame(loop);
 };
+
+window.addEventListener( 'resize', function() {
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+
+  renderer.setSize(window.innerWidth, window.innerHeight);
+}, false );
 
 init();
 loop();
