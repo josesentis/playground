@@ -1,4 +1,4 @@
-# creative-coding-lab
+# Playground
 
 The playground where I explore new disciplines, new techniques and technologies that interest me.
 
