@@ -53,10 +53,6 @@ canvas {
     pointer-events: none;
 }
 
-.link {
-    cursor: pointer;
-}
-
-.link img {
+img {
     display: none;
 }
