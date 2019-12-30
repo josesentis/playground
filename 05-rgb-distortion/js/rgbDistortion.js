@@ -8,13 +8,14 @@ class RGBShiftEffect extends EffectShell {
 
     this.vertexShader = `
       uniform vec2 uOffset;
+      uniform float uDeformationToggle;
 
       varying vec2 vUv;
 
       vec3 deformationCurve(vec3 position, vec2 uv, vec2 offset) {
         float M_PI = 3.1415926535897932384626433832795;
-        position.x = position.x + (sin(uv.y * M_PI) * offset.x);
-        position.y = position.y + (sin(uv.x * M_PI) * offset.y);
+        position.x = position.x + (sin(uv.y * M_PI) * offset.x * uDeformationToggle);
+        position.y = position.y + (sin(uv.x * M_PI) * offset.y * uDeformationToggle);
         return position;
       }
 
@@ -61,6 +62,9 @@ class RGBShiftEffect extends EffectShell {
       },
       uOffset: {
         value: new THREE.Vector2(0.0, 0.0)
+      },
+      uDeformationToggle: {
+        value: 0
       // },
       // uAlpha: {
       //   value: 0
@@ -72,8 +76,10 @@ class RGBShiftEffect extends EffectShell {
       fragmentShader: this.fragmentShader,
       transparent: true
     });
-    this.plane = new THREE.Mesh(this.geometry, this.material)
-    this.scene.add(this.plane)
+    this.plane = new THREE.Mesh(this.geometry, this.material);
+    this.scene.add(this.plane);
+
+    this.bindOtherEvents();
   }
 
   // onMouseEnter() {
@@ -145,5 +151,18 @@ class RGBShiftEffect extends EffectShell {
     this.scale = new THREE.Vector3(imageRatio, 1, 1)
     this.uniforms.uTexture.value = this.currentItem.texture
     this.plane.scale.copy(this.scale)
+  }
+
+  bindOtherEvents = () => {
+    var toggle = document.getElementById('deformationToggle');
+    var _self = this;
+
+    console.log(_self.uniforms.uDeformationToggle);
+
+    toggle.addEventListener('change', function(event) {
+      _self.uniforms.uDeformationToggle.value = event.currentTarget.checked === true ? 1 : 0;
+
+      console.log(_self.uniforms.uDeformationToggle);
+    });
   }
 }
