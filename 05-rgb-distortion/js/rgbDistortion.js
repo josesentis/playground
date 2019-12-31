@@ -1,6 +1,6 @@
 class RGBShiftEffect extends EffectShell {
-  constructor(container = document.body, itemsWrapper = null, options = {}) {
-    super(container, itemsWrapper);
+  constructor(container = document.body, options = {}) {
+    super(container);
 
     if (!this.container) return;
 
@@ -115,24 +115,17 @@ class RGBShiftEffect extends EffectShell {
     this.uniforms.uOffset.value = offset
   }
 
-  onMouseOver(index, e) {
-    if (!this.isLoaded) return
-    this.onMouseEnter()
-    if (this.currentItem && this.currentItem.index === index) return
-    this.onTargetChange(index)
-  }
-
-  onTargetChange(index) {
+  loadImage() {
     // item target changed
     this.currentItem = this.item;
 
-    if (!this.currentItem.texture) return;
+    if (!this.item.texture) return;
 
     // compute image ratio
     let imageRatio =
-      this.currentItem.img.naturalWidth / this.currentItem.img.naturalHeight
+      this.item.img.naturalWidth / this.item.img.naturalHeight
     this.scale = new THREE.Vector3(imageRatio, 1, 1)
-    this.uniforms.uTexture.value = this.currentItem.texture
+    this.uniforms.uTexture.value = this.item.texture
     this.plane.scale.copy(this.scale)
   }
 

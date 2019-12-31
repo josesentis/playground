@@ -1,19 +1,17 @@
 class EffectShell {
-  constructor(container = document.body, itemsWrapper = null) {
+  constructor(container = document.body) {
     this.container = container;
-    this.itemsWrapper = itemsWrapper;
-    this.isMouseOver = true;
     this.image = document.getElementById('image');
 
     if (!this.container) return;
 
     this.setup();
+
     this.initEffectShell().then(() => {
       console.log('load finished');
       this.isLoaded = true;
 
-      if (this.isMouseOver) this.onMouseOver(this.tempItemIndex);
-      this.tempItemIndex = null;
+      this.loadImage();
     });
 
     this.createEventsListeners();
@@ -84,7 +82,6 @@ class EffectShell {
         // all textures are loaded
         promises.forEach((promise, index) => {
           // assign texture to item
-          console.log(promise);
           this.item.texture = promise.texture
         })
 
@@ -94,22 +91,9 @@ class EffectShell {
   }
 
   createEventsListeners() {
-    console.log('Item: ', this.item);
-
-    this.item.element.addEventListener(
-      'mouseover',
-      this._onMouseOver.bind(this, this.item.index),
-      false
-    )
-
     this.container.addEventListener(
       'mousemove',
       this._onMouseMove.bind(this),
-      false
-    );
-    this.itemsWrapper.addEventListener(
-      'mouseleave',
-      this._onMouseLeave.bind(this),
       false
     );
   }
