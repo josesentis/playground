@@ -17,6 +17,7 @@ class EffectShell {
   setup() {
     window.addEventListener('resize', this.onWindowResize.bind(this), false);
     this.image = document.getElementById('image');
+    this.toggle = document.getElementById('deformationToggle');
 
     // renderer
     this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
@@ -84,26 +85,31 @@ class EffectShell {
     });
   }
 
-  createEventsListeners() {
-    this.container.addEventListener(
-      'mousemove',
-      this._onMouseMove.bind(this),
-      false
-    );
+  createEventsListeners = () => {
+    this.container.addEventListener('mousemove', this.onMouseMove, false);
+    this.toggle.addEventListener('change', this.onToggleCheckbox, false);
   }
 
-  _onMouseLeave(event) {}
+  onToggleCheckbox = event => {
+    this.uniforms.uDeformationToggle.value = event.currentTarget.checked === true ? 1 : 0;
+  }
 
-  _onMouseMove(event) {
+  onMouseMove = event => {
     // get normalized mouse position on viewport
     this.mouse.x = (event.clientX / this.viewport.width) * 2 - 1
     this.mouse.y = -(event.clientY / this.viewport.height) * 2 + 1
 
-    this.onMouseMove();
-  }
+    let x = this.mouse.x.map(-1, 1, -this.viewSize.width / 2, this.viewSize.width / 2);
+    let y = this.mouse.y.map(-1, 1, -this.viewSize.height / 2, this.viewSize.height / 2);
 
-  _onMouseOver(event) {
-    this.onMouseOver(event)
+    this.position = new THREE.Vector3(x, y, 0);
+
+    TweenLite.to(this.plane.position, 1, {
+      x: x,
+      y: y,
+      ease: Power4.easeOut,
+      onUpdate: this.onPositionUpdate.bind(this)
+    });
   }
 
   onWindowResize() {
@@ -117,10 +123,6 @@ class EffectShell {
   onMouseEnter(event) {}
 
   onMouseLeave(event) {}
-
-  onMouseMove(event) {}
-
-  onMouseOver(event) {}
 
   get viewport() {
     let width = this.container.clientWidth
@@ -142,5 +144,16 @@ class EffectShell {
     let height = 2 * Math.tan(vFov / 2) * distance
     let width = height * this.viewport.aspectRatio
     return { width, height, vFov }
+  }
+
+  loadImage() {
+    if (!this.item.texture) return;
+
+    // compute image ratio
+    let imageRatio =
+      this.item.img.naturalWidth / this.item.img.naturalHeight
+    this.scale = new THREE.Vector3(imageRatio, 1, 1)
+    this.uniforms.uTexture.value = this.item.texture
+    this.plane.scale.copy(this.scale)
   }
 }

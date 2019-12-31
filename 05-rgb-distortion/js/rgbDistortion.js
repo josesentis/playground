@@ -47,8 +47,6 @@ class RGBShiftEffect extends EffectShell {
       }
     `;
 
-    this.bindOtherEvents.bind(this);
-
     this.init();
   }
 
@@ -78,32 +76,6 @@ class RGBShiftEffect extends EffectShell {
     });
     this.plane = new THREE.Mesh(this.geometry, this.material);
     this.scene.add(this.plane);
-
-    this.bindOtherEvents();
-  }
-
-  onMouseMove() {
-    // project mouse position to world coodinates
-    let x = this.mouse.x.map(
-      -1,
-      1,
-      -this.viewSize.width / 2,
-      this.viewSize.width / 2
-    )
-    let y = this.mouse.y.map(
-      -1,
-      1,
-      -this.viewSize.height / 2,
-      this.viewSize.height / 2
-    )
-
-    this.position = new THREE.Vector3(x, y, 0)
-    TweenLite.to(this.plane.position, 1, {
-      x: x,
-      y: y,
-      ease: Power4.easeOut,
-      onUpdate: this.onPositionUpdate.bind(this)
-    })
   }
 
   onPositionUpdate() {
@@ -113,25 +85,5 @@ class RGBShiftEffect extends EffectShell {
       .sub(this.position)
       .multiplyScalar(-this.options.strength)
     this.uniforms.uOffset.value = offset
-  }
-
-  loadImage() {
-    if (!this.item.texture) return;
-
-    // compute image ratio
-    let imageRatio =
-      this.item.img.naturalWidth / this.item.img.naturalHeight
-    this.scale = new THREE.Vector3(imageRatio, 1, 1)
-    this.uniforms.uTexture.value = this.item.texture
-    this.plane.scale.copy(this.scale)
-  }
-
-  bindOtherEvents() {
-    var toggle = document.getElementById('deformationToggle');
-    var _self = this;
-
-    toggle.addEventListener('change', function(e) {
-      _self.uniforms.uDeformationToggle.value = event.currentTarget.checked === true ? 1 : 0;
-    });
   }
 }
