@@ -1,26 +1,35 @@
 class EffectShell {
   constructor(container = document.body, itemsWrapper = null) {
-    this.container = container
-    this.itemsWrapper = itemsWrapper
-    if (!this.container || !this.itemsWrapper) return
-    this.setup()
+    this.container = container;
+    this.itemsWrapper = itemsWrapper;
+    this.isMouseOver = true;
+    this.image = document.getElementById('image');
+
+    if (!this.container) return;
+
+    this.setup();
     this.initEffectShell().then(() => {
-      console.log('load finished')
-      this.isLoaded = true
-      if (this.isMouseOver) this.onMouseOver(this.tempItemIndex)
-      this.tempItemIndex = null
-    })
-    this.createEventsListeners()
+      console.log('load finished');
+      this.isLoaded = true;
+      // this.onMouseMove();
+
+      if (this.isMouseOver) this.onMouseOver(this.tempItemIndex);
+      this.tempItemIndex = null;
+
+      // this.uniforms.uTexture.value = this.currentItem.texture
+    });
+
+    this.createEventsListeners();
   }
 
   setup() {
-    window.addEventListener('resize', this.onWindowResize.bind(this), false)
+    window.addEventListener('resize', this.onWindowResize.bind(this), false);
 
     // renderer
-    this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true })
-    this.renderer.setSize(this.viewport.width, this.viewport.height)
-    this.renderer.setPixelRatio = window.devicePixelRatio
-    this.container.appendChild(this.renderer.domElement)
+    this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    this.renderer.setSize(this.viewport.width, this.viewport.height);
+    this.renderer.setPixelRatio = window.devicePixelRatio;
+    this.container.appendChild(this.renderer.domElement);
 
     // scene
     this.scene = new THREE.Scene()
@@ -36,17 +45,6 @@ class EffectShell {
 
     //mouse
     this.mouse = new THREE.Vector2()
-
-    // console.log(this.viewSize)
-    // let pg = new THREE.PlaneBufferGeometry(
-    //   this.viewSize.width,
-    //   this.viewSize.height,
-    //   1,
-    //   1
-    // )
-    // let pm = new THREE.MeshBasicMaterial({ color: 0xff0000 })
-    // let mm = new THREE.Mesh(pg, pm)
-    // this.scene.add(mm)
 
     // time
     this.timeSpeed = 2
@@ -64,21 +62,34 @@ class EffectShell {
   }
 
   initEffectShell() {
-    let promises = []
+    const link = document.querySelector('.link');
+    let promises = [];
 
-    this.items = this.itemsElements
+    // this.items = [{
+    //   element: link,
+    //   img: this.image,
+    //   index: 0
+    // }];
 
-    const THREEtextureLoader = new THREE.TextureLoader()
-    this.items.forEach((item, index) => {
+    this.item = {
+      element: link,
+      img: this.image,
+      index: 0
+    };
+
+    // this.items = this.itemsElements;
+    const THREEtextureLoader = new THREE.TextureLoader();
+
+    // this.items.forEach((item, index) => {
       // create textures
-      promises.push(
-        this.loadTexture(
-          THREEtextureLoader,
-          item.img ? item.img.src : null,
-          index
-        )
+    promises.push(
+      this.loadTexture(
+        THREEtextureLoader,
+        this.item.img ? this.item.img.src : null,
+        this.item.index
       )
-    })
+    );
+    // });
 
     return new Promise((resolve, reject) => {
       // resolve textures promises
@@ -86,56 +97,60 @@ class EffectShell {
         // all textures are loaded
         promises.forEach((promise, index) => {
           // assign texture to item
-          this.items[index].texture = promise.texture
+          console.log(promise);
+
+          // this.items[index].texture = promise.texture
+          this.item.texture = promise.texture
         })
-        resolve()
-      })
-    })
+
+        resolve();
+      });
+    });
   }
 
   createEventsListeners() {
-    this.items.forEach((item, index) => {
-      item.element.addEventListener(
-        'mouseover',
-        this._onMouseOver.bind(this, index),
-        false
-      )
-    })
+    // console.log('Items: ', this.items);
+
+    // this.items.forEach((item, index) => {
+    console.log('Item: ', this.item);
+
+    this.item.element.addEventListener(
+      'mouseover',
+      this._onMouseOver.bind(this, this.item.index),
+      false
+    )
+    // });
 
     this.container.addEventListener(
       'mousemove',
       this._onMouseMove.bind(this),
       false
-    )
+    );
     this.itemsWrapper.addEventListener(
       'mouseleave',
       this._onMouseLeave.bind(this),
       false
-    )
+    );
   }
 
-  _onMouseLeave(event) {
-    this.isMouseOver = false
-    this.onMouseLeave(event)
-  }
+  _onMouseLeave(event) {}
 
   _onMouseMove(event) {
     // get normalized mouse position on viewport
     this.mouse.x = (event.clientX / this.viewport.width) * 2 - 1
     this.mouse.y = -(event.clientY / this.viewport.height) * 2 + 1
 
-    this.onMouseMove(event)
+    this.onMouseMove();
   }
 
-  _onMouseOver(index, event) {
-    this.tempItemIndex = index
-    this.onMouseOver(index, event)
+  _onMouseOver(event) {
+    this.onMouseOver(event)
   }
 
   onWindowResize() {
-    this.camera.aspect = this.viewport.aspectRatio
-    this.camera.updateProjectionMatrix()
-    this.renderer.setSize(this.viewport.width, this.viewport.height)
+    this.camera.aspect = this.viewport.aspectRatio;
+    this.camera.updateProjectionMatrix();
+    this.renderer.setSize(this.viewport.width, this.viewport.height);
   }
 
   onUpdate() {}
@@ -146,7 +161,7 @@ class EffectShell {
 
   onMouseMove(event) {}
 
-  onMouseOver(index, event) {}
+  onMouseOver(event) {}
 
   get viewport() {
     let width = this.container.clientWidth
@@ -170,17 +185,17 @@ class EffectShell {
     return { width, height, vFov }
   }
 
-  get itemsElements() {
-    // convert NodeList to Array
-    const items = [...this.itemsWrapper.querySelectorAll('.link')]
+  // get itemsElements() {
+  //   // convert NodeList to Array
+  //   const items = [...this.itemsWrapper.querySelectorAll('.link')]
 
-    //create Array of items including element, image and index
-    return items.map((item, index) => ({
-      element: item,
-      img: item.querySelector('img') || null,
-      index: index
-    }))
-  }
+  //   //create Array of items including element, image and index
+  //   return items.map((item, index) => ({
+  //     element: item,
+  //     img: item.querySelector('img') || null,
+  //     index: index
+  //   }))
+  // }
 
   loadTexture(loader, url, index) {
     // https://threejs.org/docs/#api/en/loaders/TextureLoader
@@ -196,7 +211,7 @@ class EffectShell {
 
         // onLoad callback
         texture => {
-          resolve({ texture, index })
+          resolve({ texture });
         },
 
         // onProgress callback currently not supported

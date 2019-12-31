@@ -1,7 +1,8 @@
 class RGBShiftEffect extends EffectShell {
   constructor(container = document.body, itemsWrapper = null, options = {}) {
-    super(container, itemsWrapper)
-    if (!this.container || !this.itemsWrapper) return
+    super(container, itemsWrapper);
+
+    if (!this.container) return
 
     options.strength = options.strength || 0.25;
     this.options = options;
@@ -46,6 +47,8 @@ class RGBShiftEffect extends EffectShell {
       }
     `;
 
+    this.bindOtherEvents.bind(this);
+
     this.init();
   }
 
@@ -65,9 +68,6 @@ class RGBShiftEffect extends EffectShell {
       },
       uDeformationToggle: {
         value: 0
-      // },
-      // uAlpha: {
-      //   value: 0
       }
     };
     this.material = new THREE.ShaderMaterial({
@@ -83,24 +83,24 @@ class RGBShiftEffect extends EffectShell {
   }
 
   // onMouseEnter() {
-  //   if (!this.currentItem || !this.isMouseOver) {
-  //     this.isMouseOver = true
-  //     // show plane
-  //     TweenLite.to(this.uniforms.uAlpha, 0.5, {
-  //       value: 1,
-  //       ease: Power4.easeOut
-  //     })
-  //   }
+    // if (!this.currentItem || !this.isMouseOver) {
+      // this.isMouseOver = true
+      // show plane
+      // TweenLite.to(this.uniforms.uAlpha, 0.5, {
+      //   value: 1,
+      //   ease: Power4.easeOut
+      // })
+    // }
   // }
 
   // onMouseLeave(event) {
-  //   TweenLite.to(this.uniforms.uAlpha, 0.5, {
-  //     value: 0,
-  //     ease: Power4.easeOut
-  //   })
+    // TweenLite.to(this.uniforms.uAlpha, 0.5, {
+    //   value: 0,
+    //   ease: Power4.easeOut
+    // })
   // }
 
-  onMouseMove(event) {
+  onMouseMove() {
     // project mouse position to world coodinates
     let x = this.mouse.x.map(
       -1,
@@ -142,8 +142,10 @@ class RGBShiftEffect extends EffectShell {
 
   onTargetChange(index) {
     // item target changed
-    this.currentItem = this.items[index]
-    if (!this.currentItem.texture) return
+    // this.currentItem = this.items[index]
+    this.currentItem = this.item;
+
+    if (!this.currentItem.texture) return;
 
     // compute image ratio
     let imageRatio =
@@ -153,16 +155,12 @@ class RGBShiftEffect extends EffectShell {
     this.plane.scale.copy(this.scale)
   }
 
-  bindOtherEvents = () => {
+  bindOtherEvents() {
     var toggle = document.getElementById('deformationToggle');
     var _self = this;
 
-    console.log(_self.uniforms.uDeformationToggle);
-
-    toggle.addEventListener('change', function(event) {
+    toggle.addEventListener('change', function(e) {
       _self.uniforms.uDeformationToggle.value = event.currentTarget.checked === true ? 1 : 0;
-
-      console.log(_self.uniforms.uDeformationToggle);
     });
   }
 }
