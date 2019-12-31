@@ -116,9 +116,6 @@ class RGBShiftEffect extends EffectShell {
   }
 
   loadImage() {
-    // item target changed
-    this.currentItem = this.item;
-
     if (!this.item.texture) return;
 
     // compute image ratio

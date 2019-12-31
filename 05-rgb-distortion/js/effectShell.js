@@ -1,24 +1,22 @@
 class EffectShell {
   constructor(container = document.body) {
     this.container = container;
-    this.image = document.getElementById('image');
 
     if (!this.container) return;
 
     this.setup();
 
-    this.initEffectShell().then(() => {
+    this.loadTexture().then(() => {
       console.log('load finished');
       this.isLoaded = true;
 
       this.loadImage();
     });
-
-    this.createEventsListeners();
   }
 
   setup() {
     window.addEventListener('resize', this.onWindowResize.bind(this), false);
+    this.image = document.getElementById('image');
 
     // renderer
     this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
@@ -27,7 +25,7 @@ class EffectShell {
     this.container.appendChild(this.renderer.domElement);
 
     // scene
-    this.scene = new THREE.Scene()
+    this.scene = new THREE.Scene();
 
     // camera
     this.camera = new THREE.PerspectiveCamera(
@@ -47,46 +45,42 @@ class EffectShell {
     this.clock = new THREE.Clock()
 
     // animation loop
-    this.renderer.setAnimationLoop(this.render.bind(this))
+    this.renderer.setAnimationLoop(this.render);
+
+    // other listeners
+    this.createEventsListeners();
   }
 
-  render() {
+  render = () => {
     // called every frame
     this.time += this.clock.getDelta() * this.timeSpeed
     this.renderer.render(this.scene, this.camera)
   }
 
-  initEffectShell() {
-    const link = document.querySelector('.link');
-    let promises = [];
-
-    this.item = {
-      element: link,
-      img: this.image,
-      index: 0
-    };
+  loadTexture() {
+    this.item = { img: this.image };
 
     const THREEtextureLoader = new THREE.TextureLoader();
 
-    promises.push(
-      this.loadTexture(
-        THREEtextureLoader,
-        this.item.img ? this.item.img.src : null,
-        this.item.index
-      )
-    );
-
     return new Promise((resolve, reject) => {
-      // resolve textures promises
-      Promise.all(promises).then(promises => {
-        // all textures are loaded
-        promises.forEach((promise, index) => {
-          // assign texture to item
-          this.item.texture = promise.texture
-        })
-
-        resolve();
-      });
+      if (this.item.img) {
+        THREEtextureLoader.load(
+          // resource URL
+          this.item.img.src,
+          // onLoad callback
+          image => {
+            this.item.texture = image;
+            resolve();
+          },
+          // onProgress callback currently not supported
+          undefined,
+          // onError callback
+          error => {
+            console.error('An error happened.', error)
+            reject(error)
+          }
+        )
+      }
     });
   }
 
@@ -148,34 +142,5 @@ class EffectShell {
     let height = 2 * Math.tan(vFov / 2) * distance
     let width = height * this.viewport.aspectRatio
     return { width, height, vFov }
-  }
-
-  loadTexture(loader, url, index) {
-    // https://threejs.org/docs/#api/en/loaders/TextureLoader
-    return new Promise((resolve, reject) => {
-      if (!url) {
-        resolve({ texture: null, index })
-        return
-      }
-      // load a resource
-      loader.load(
-        // resource URL
-        url,
-
-        // onLoad callback
-        texture => {
-          resolve({ texture });
-        },
-
-        // onProgress callback currently not supported
-        undefined,
-
-        // onError callback
-        error => {
-          console.error('An error happened.', error)
-          reject(error)
-        }
-      )
-    })
   }
 }
