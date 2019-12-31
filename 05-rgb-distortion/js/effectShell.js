@@ -11,12 +11,9 @@ class EffectShell {
     this.initEffectShell().then(() => {
       console.log('load finished');
       this.isLoaded = true;
-      // this.onMouseMove();
 
       if (this.isMouseOver) this.onMouseOver(this.tempItemIndex);
       this.tempItemIndex = null;
-
-      // this.uniforms.uTexture.value = this.currentItem.texture
     });
 
     this.createEventsListeners();
@@ -65,23 +62,14 @@ class EffectShell {
     const link = document.querySelector('.link');
     let promises = [];
 
-    // this.items = [{
-    //   element: link,
-    //   img: this.image,
-    //   index: 0
-    // }];
-
     this.item = {
       element: link,
       img: this.image,
       index: 0
     };
 
-    // this.items = this.itemsElements;
     const THREEtextureLoader = new THREE.TextureLoader();
 
-    // this.items.forEach((item, index) => {
-      // create textures
     promises.push(
       this.loadTexture(
         THREEtextureLoader,
@@ -89,7 +77,6 @@ class EffectShell {
         this.item.index
       )
     );
-    // });
 
     return new Promise((resolve, reject) => {
       // resolve textures promises
@@ -98,8 +85,6 @@ class EffectShell {
         promises.forEach((promise, index) => {
           // assign texture to item
           console.log(promise);
-
-          // this.items[index].texture = promise.texture
           this.item.texture = promise.texture
         })
 
@@ -109,9 +94,6 @@ class EffectShell {
   }
 
   createEventsListeners() {
-    // console.log('Items: ', this.items);
-
-    // this.items.forEach((item, index) => {
     console.log('Item: ', this.item);
 
     this.item.element.addEventListener(
@@ -119,7 +101,6 @@ class EffectShell {
       this._onMouseOver.bind(this, this.item.index),
       false
     )
-    // });
 
     this.container.addEventListener(
       'mousemove',
@@ -184,18 +165,6 @@ class EffectShell {
     let width = height * this.viewport.aspectRatio
     return { width, height, vFov }
   }
-
-  // get itemsElements() {
-  //   // convert NodeList to Array
-  //   const items = [...this.itemsWrapper.querySelectorAll('.link')]
-
-  //   //create Array of items including element, image and index
-  //   return items.map((item, index) => ({
-  //     element: item,
-  //     img: item.querySelector('img') || null,
-  //     index: index
-  //   }))
-  // }
 
   loadTexture(loader, url, index) {
     // https://threejs.org/docs/#api/en/loaders/TextureLoader

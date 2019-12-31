@@ -2,7 +2,7 @@ class RGBShiftEffect extends EffectShell {
   constructor(container = document.body, itemsWrapper = null, options = {}) {
     super(container, itemsWrapper);
 
-    if (!this.container) return
+    if (!this.container) return;
 
     options.strength = options.strength || 0.25;
     this.options = options;
@@ -82,24 +82,6 @@ class RGBShiftEffect extends EffectShell {
     this.bindOtherEvents();
   }
 
-  // onMouseEnter() {
-    // if (!this.currentItem || !this.isMouseOver) {
-      // this.isMouseOver = true
-      // show plane
-      // TweenLite.to(this.uniforms.uAlpha, 0.5, {
-      //   value: 1,
-      //   ease: Power4.easeOut
-      // })
-    // }
-  // }
-
-  // onMouseLeave(event) {
-    // TweenLite.to(this.uniforms.uAlpha, 0.5, {
-    //   value: 0,
-    //   ease: Power4.easeOut
-    // })
-  // }
-
   onMouseMove() {
     // project mouse position to world coodinates
     let x = this.mouse.x.map(
@@ -142,7 +124,6 @@ class RGBShiftEffect extends EffectShell {
 
   onTargetChange(index) {
     // item target changed
-    // this.currentItem = this.items[index]
     this.currentItem = this.item;
 
     if (!this.currentItem.texture) return;
