@@ -1,6 +1,6 @@
-class RGBShiftEffect extends EffectShell {
+class RGBDistortion {
   constructor(container = document.body, options = {}) {
-    super(container);
+    this.container = container;
 
     if (!this.container) return;
 
@@ -9,14 +9,14 @@ class RGBShiftEffect extends EffectShell {
 
     this.vertexShader = `
       uniform vec2 uOffset;
-      uniform float uDeformationToggle;
+      // uniform float uDeformationToggle;
 
       varying vec2 vUv;
 
       vec3 deformationCurve(vec3 position, vec2 uv, vec2 offset) {
         float M_PI = 3.1415926535897932384626433832795;
-        position.x = position.x + (sin(uv.y * M_PI) * offset.x * uDeformationToggle);
-        position.y = position.y + (sin(uv.x * M_PI) * offset.y * uDeformationToggle);
+        // position.x = position.x + (sin(uv.y * M_PI) * offset.x * uDeformationToggle);
+        // position.y = position.y + (sin(uv.x * M_PI) * offset.y * uDeformationToggle);
         return position;
       }
 
@@ -47,7 +47,53 @@ class RGBShiftEffect extends EffectShell {
       }
     `;
 
+    this.setup();
     this.init();
+
+    this.loadTexture().then(() => {
+      this.isLoaded = true;
+
+      this.loadImage();
+    });
+  }
+
+  setup() {
+    this.image = document.getElementById('image');
+    this.toggle = document.getElementById('deformationToggle');
+
+    console.log(this.viewport);
+
+    // renderer
+    this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    this.renderer.setSize(this.viewport.width, this.viewport.height);
+    this.renderer.setPixelRatio = window.devicePixelRatio;
+    this.container.appendChild(this.renderer.domElement);
+
+    // scene
+    this.scene = new THREE.Scene();
+
+    // camera
+    this.camera = new THREE.PerspectiveCamera(
+      40,
+      this.viewport.aspectRatio,
+      0.1,
+      100
+    )
+    this.camera.position.set(0, 0, 3)
+
+    //mouse
+    this.mouse = new THREE.Vector2()
+
+    // time
+    this.timeSpeed = 2
+    this.time = 0
+    this.clock = new THREE.Clock()
+
+    // animation loop
+    this.renderer.setAnimationLoop(this.render);
+
+    // other listeners
+    this.createEventsListeners();
   }
 
   init() {
@@ -63,9 +109,9 @@ class RGBShiftEffect extends EffectShell {
       },
       uOffset: {
         value: new THREE.Vector2(0.0, 0.0)
-      },
-      uDeformationToggle: {
-        value: 0
+      // },
+      // uDeformationToggle: {
+      //   value: 0
       }
     };
     this.material = new THREE.ShaderMaterial({
@@ -78,12 +124,113 @@ class RGBShiftEffect extends EffectShell {
     this.scene.add(this.plane);
   }
 
-  onPositionUpdate() {
+  onPositionUpdate = () => {
     // compute offset
     let offset = this.plane.position
       .clone()
       .sub(this.position)
       .multiplyScalar(-this.options.strength)
-    this.uniforms.uOffset.value = offset
+    this.uniforms.uOffset.value = offset;
+  }
+
+  render = () => {
+    // called every frame
+    this.time += this.clock.getDelta() * this.timeSpeed
+    this.renderer.render(this.scene, this.camera)
+  }
+
+  loadTexture() {
+    this.item = { img: this.image };
+
+    const THREEtextureLoader = new THREE.TextureLoader();
+
+    return new Promise((resolve, reject) => {
+      if (this.item.img) {
+        THREEtextureLoader.load(
+          // resource URL
+          this.item.img.src,
+          // onLoad callback
+          image => {
+            this.item.texture = image;
+            resolve();
+          },
+          // onProgress callback currently not supported
+          undefined,
+          // onError callback
+          error => {
+            console.error('An error happened.', error)
+            reject(error)
+          }
+        )
+      }
+    });
+  }
+
+  createEventsListeners = () => {
+    this.container.addEventListener('mousemove', this.onMouseMove, false);
+    // this.toggle.addEventListener('change', this.onToggleCheckbox, false);
+
+    window.addEventListener('resize', this.onWindowResize, false);
+  }
+
+  // onToggleCheckbox = event => {
+  //   this.uniforms.uDeformationToggle.value = event.currentTarget.checked === true ? 1 : 0;
+  // }
+
+  onMouseMove = event => {
+    // get normalized mouse position on viewport
+    this.mouse.x = (event.clientX / this.viewport.width) * 2 - 1
+    this.mouse.y = -(event.clientY / this.viewport.height) * 2 + 1
+
+    let x = this.mouse.x.map(-1, 1, -this.viewSize.width / 2, this.viewSize.width / 2);
+    let y = this.mouse.y.map(-1, 1, -this.viewSize.height / 2, this.viewSize.height / 2);
+
+    this.position = new THREE.Vector3(x, y, 0);
+
+    TweenLite.to(this.plane.position, 1, {
+      x: x,
+      y: y,
+      ease: Power4.easeOut,
+      onUpdate: this.onPositionUpdate
+    });
+  }
+
+  onWindowResize = () => {
+    this.camera.aspect = this.viewport.aspectRatio;
+    this.camera.updateProjectionMatrix();
+    this.renderer.setSize(this.viewport.width, this.viewport.height);
+  }
+
+  get viewport() {
+    let width = this.container.clientWidth
+    let height = this.container.clientHeight
+    let aspectRatio = width / height
+    return {
+      width,
+      height,
+      aspectRatio
+    }
+  }
+
+  get viewSize() {
+    // fit plane to screen
+    // https://gist.github.com/ayamflow/96a1f554c3f88eef2f9d0024fc42940f
+
+    let distance = this.camera.position.z
+    let vFov = (this.camera.fov * Math.PI) / 180
+    let height = 2 * Math.tan(vFov / 2) * distance
+    let width = height * this.viewport.aspectRatio
+    return { width, height, vFov }
+  }
+
+  loadImage() {
+    if (!this.item.texture) return;
+
+    // compute image ratio
+    let imageRatio =
+      this.item.img.naturalWidth / this.item.img.naturalHeight
+    this.scale = new THREE.Vector3(imageRatio, 1, 1)
+    this.uniforms.uTexture.value = this.item.texture
+    this.plane.scale.copy(this.scale)
   }
 }
