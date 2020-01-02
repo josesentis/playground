@@ -67,10 +67,7 @@ class RGBDistortion {
     this.time = 0;
     this.clock = new THREE.Clock();
 
-    // animation loop
     this.renderer.setAnimationLoop(this.render);
-
-    // other listeners
     this.createEventsListeners();
   }
 
@@ -79,17 +76,11 @@ class RGBDistortion {
     this.scale = new THREE.Vector3(1, 1, 1);
     this.geometry = new THREE.PlaneBufferGeometry(1, 1, 32, 32);
     this.uniforms = {
-      uTime: {
-        value: 0
-      },
       uTexture: {
         value: null
       },
       uOffset: {
         value: new THREE.Vector2(0.0, 0.0)
-      // },
-      // uDeformationToggle: {
-      //   value: 0
       }
     };
     this.material = new THREE.ShaderMaterial({
@@ -112,9 +103,8 @@ class RGBDistortion {
   }
 
   render = () => {
-    // called every frame
-    this.time += this.clock.getDelta() * this.timeSpeed
-    this.renderer.render(this.scene, this.camera)
+    this.time += this.clock.getDelta() * this.timeSpeed;
+    this.renderer.render(this.scene, this.camera);
   }
 
   loadTexture() {
@@ -147,7 +137,6 @@ class RGBDistortion {
 
   createEventsListeners = () => {
     this.container.addEventListener('mousemove', this.onMouseMove, false);
-
     window.addEventListener('resize', this.onWindowResize, false);
   }
 
@@ -176,14 +165,15 @@ class RGBDistortion {
   }
 
   get viewport() {
-    let width = this.container.clientWidth
-    let height = this.container.clientHeight
-    let aspectRatio = width / height
+    let width = this.container.clientWidth;
+    let height = this.container.clientHeight;
+    let aspectRatio = width / height;
+
     return {
       width,
       height,
       aspectRatio
-    }
+    };
   }
 
   get viewSize() {
