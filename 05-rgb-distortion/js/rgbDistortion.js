@@ -31,7 +31,6 @@ class RGBDistortion {
   constructor(container = document.body) {
     this.container = container;
 
-
     this.setup();
     this.init();
 
@@ -44,7 +43,6 @@ class RGBDistortion {
 
   setup() {
     this.image = document.getElementById('image');
-    this.toggle = document.getElementById('deformationToggle');
 
     // renderer
     this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
