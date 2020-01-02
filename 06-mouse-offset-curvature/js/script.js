@@ -1,6 +1,4 @@
 (function() {
-    const container = document.body;
-
     const preloadImages = () => {
         return new Promise((resolve, reject) => {
             imagesLoaded(document.querySelectorAll('img'), resolve);
@@ -8,8 +6,7 @@
     };
 
     preloadImages().then(() => {
-        // Remove the loader
         document.body.classList.remove('loading');
-        const effect = new RGBDistortion(container, { strength: 0.25 });
+        const effect = new ImageCurve();
     });
 })();
