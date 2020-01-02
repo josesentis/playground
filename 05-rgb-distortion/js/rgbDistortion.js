@@ -216,21 +216,21 @@ class RGBDistortion {
     // fit plane to screen
     // https://gist.github.com/ayamflow/96a1f554c3f88eef2f9d0024fc42940f
 
-    let distance = this.camera.position.z
-    let vFov = (this.camera.fov * Math.PI) / 180
-    let height = 2 * Math.tan(vFov / 2) * distance
-    let width = height * this.viewport.aspectRatio
-    return { width, height, vFov }
+    let distance = this.camera.position.z;
+    let vFov = (this.camera.fov * Math.PI) / 180;
+    let height = 2 * Math.tan(vFov / 2) * distance;
+    let width = height * this.viewport.aspectRatio;
+
+    return { width, height, vFov };
   }
 
   loadImage() {
     if (!this.item.texture) return;
 
-    // compute image ratio
     let imageRatio =
-      this.item.img.naturalWidth / this.item.img.naturalHeight
-    this.scale = new THREE.Vector3(imageRatio, 1, 1)
-    this.uniforms.uTexture.value = this.item.texture
-    this.plane.scale.copy(this.scale)
+      this.item.img.naturalWidth / this.item.img.naturalHeight;
+    this.scale = new THREE.Vector3(imageRatio, 1, 1);
+    this.uniforms.uTexture.value = this.item.texture;
+    this.plane.scale.copy(this.scale);
   }
 }
