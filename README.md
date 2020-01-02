@@ -4,6 +4,7 @@ The playground where I explore new disciplines, new techniques and technologies 
 
 ## Drops
 
+* [05-rgb-distortion (12/2019)](https://josesentis15.github.io/creative-coding-lab/05-rgb-distortion/)
 * [04-gradient-mask (4/2019)](https://josesentis15.github.io/creative-coding-lab/04-gradient-mask/)
 * [03-city (4/2019)](https://josesentis15.github.io/creative-coding-lab/03-city/)
 * [02-box (3/2019)](https://josesentis15.github.io/creative-coding-lab/02-box/)
