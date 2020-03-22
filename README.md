@@ -3,6 +3,7 @@
 The playground where I explore new disciplines, new techniques and technologies that interest me.
 
 ## Drops
+* [08-color-iteration (03/2020)](https://josesentis.github.io/playground/08-color-iteration/)
 * [07-tv-noise (03/2020)](https://josesentis.github.io/playground/07-tv-noise/)
 * [06-mouse-offset-curvature (12/2019)](https://josesentis.github.io/playground/06-mouse-offset-curvature/)
 * [05-rgb-distortion (12/2019)](https://josesentis.github.io/playground/05-rgb-distortion/)
