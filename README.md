@@ -3,6 +3,7 @@
 The playground where I explore new disciplines, new techniques and technologies that interest me.
 
 ## Drops
+* [09-geometric-typography (03/2020)](https://josesentis.github.io/playground/09-geometric-typography/)
 * [08-color-iteration (03/2020)](https://josesentis.github.io/playground/08-color-iteration/)
 * [07-tv-noise (03/2020)](https://josesentis.github.io/playground/07-tv-noise/)
 * [06-mouse-offset-curvature (12/2019)](https://josesentis.github.io/playground/06-mouse-offset-curvature/)
