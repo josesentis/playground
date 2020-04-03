@@ -27,5 +27,6 @@ function draw() {
   fill(mainColor);
   stroke(mainColor);
   strokeWeight(strokeSize);
+  strokeCap(SQUARE);
   line(width / 2, height / 2, canvasSize, canvasSize);
 }
