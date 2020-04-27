@@ -4,13 +4,13 @@
     "abstract": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
     "link": "https://josesentis.github.io/playground/06-mouse-offset-curvature/",
     "date": "2019-12-23",
-    "image": "/images/exercices/mouse-offset-curvature.jpg"
+    "image": "/images/mouse-offset-curvature.jpg"
   },
   {
     "title": "RGB distortion'",
     "abstract": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. '",
     "link": "https://josesentis.github.io/playground/05-rgb-distortion/'",
     "date": "2019-12-23'",
-    "image": "/images/exercices/rgb-distortion.jpg"
+    "image": "/images/rgb-distortion.jpg"
   }
 ]

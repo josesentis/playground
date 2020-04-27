@@ -1,20 +1,37 @@
 {
-    "name": "cc-workshop",
-    "description": "threejs creative coding lab",
-    "authors": "Jose Sentis",
-    "version": "1.0.0",
-    "scripts": {
-        "start": "http-server ./ -p 8090 -o",
-        "updeps": "ncu"
-    },
-    "dependencies": {
-        "@runroom/eslint-config-runroom": "^0.1.0",
-        "http-server": "^0.11.1",
-        "npm-check-updates": "^3.1.10"
-    },
-    "devDependencies": {
-        "dat.gui": "^0.7.6",
-        "gsap": "^2.1.3",
-        "three": "^0.105.2"
-    }
+  "name": "playground",
+  "description": "threejs creative coding lab",
+  "authors": "Jose Sentis",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "http-server ./ -p 8090 -o",
+    "updeps": "ncu",
+    "assets:build": "copyfiles -f */cover/*.jpg public/images",
+    "build": "yarn assets:build"
+  },
+  "dependencies": {
+    "@runroom/eslint-config-runroom": "^0.1.0",
+    "copyfiles": "^2.2.0",
+    "http-server": "^0.11.1",
+    "npm-check-updates": "^3.1.10"
+  },
+  "devDependencies": {
+    "dat.gui": "^0.7.6",
+    "gsap": "^2.1.3",
+    "three": "^0.105.2"
+  },
+  "main": "index.html",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/josesentis/playground.git"
+  },
+  "keywords": [
+    "creative coding"
+  ],
+  "author": "Jose Sentis",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/josesentis/playground/issues"
+  },
+  "homepage": "https://github.com/josesentis/playground#readme"
 }
