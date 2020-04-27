@@ -4,10 +4,11 @@
   "authors": "Jose Sentis",
   "version": "1.0.0",
   "scripts": {
-    "start": "http-server ./ -p 8090 -o",
-    "updeps": "ncu",
     "assets:build": "copyfiles -f */cover/*.jpg public/images",
-    "build": "yarn assets:build"
+    "build": "yarn assets:build",
+    "clean": "rm -rf public/images",
+    "start": "http-server ./ -p 8090 -o",
+    "updeps": "ncu"
   },
   "dependencies": {
     "@runroom/eslint-config-runroom": "^0.1.0",
