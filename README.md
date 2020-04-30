@@ -1,8 +1,9 @@
 <h1 align="center">
   Playground
 </h1>
+<br><br>
 <h3 align="center">The place where I explore new disciplines, new techniques and technologies that interest me.</h3>
-
+<br><br><br>
 ## Drops
 * [09-geometric-typography (04/2020)](https://josesentis.github.io/playground/09-geometric-typography/)
 * [08-color-iteration (03/2020)](https://josesentis.github.io/playground/08-color-iteration/)
