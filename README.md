@@ -1,6 +1,7 @@
-# Playground
-
-The playground where I explore new disciplines, new techniques and technologies that interest me.
+<h1 align="center">
+  Playground
+</h1>
+<h3 align="center">The place where I explore new disciplines, new techniques and technologies that interest me.</h3>
 
 ## Drops
 * [09-geometric-typography (04/2020)](https://josesentis.github.io/playground/09-geometric-typography/)
