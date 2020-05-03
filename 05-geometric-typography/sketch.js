@@ -1,7 +1,7 @@
 const circleSize = 475;
 const canvasSize = 525;
 const backgroundColor = '#191919';
-const mainColor = '#f1f1f1';
+const mainColor = '#3cea43';
 let iteration = 4;
 let increase = true;
 
