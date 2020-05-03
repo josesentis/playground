@@ -1,37 +1,37 @@
 [
   {
-    "title": "Mouse offset curvature",
-    "abstract": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
-    "link": "https://josesentis.github.io/playground/06-mouse-offset-curvature/",
-    "date": "2019-12-23",
-    "image": "images/mouse-offset-curvature.jpg"
-  },
-  {
     "title": "RGB distortion",
-    "abstract": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
-    "link": "https://josesentis.github.io/playground/05-rgb-distortion/",
+    "abstract": "Image rgb channels distorted with the mouse movement. Made using Three.js",
+    "link": "https://josesentis.github.io/playground/01-rgb-distortion/",
     "date": "2019-12-23",
     "image": "images/rgb-distortion.jpg"
+  },
+  {
+    "title": "Mouse offset curvature",
+    "abstract": "Image curvature distrotion with the mouse movement. Made using Three.js",
+    "link": "https://josesentis.github.io/playground/02-mouse-offset-curvature/",
+    "date": "2019-12-23",
+    "image": "images/mouse-offset-curvature.jpg"
   },
   {
     "title": "TV Noise",
-    "abstract": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
-    "link": "https://josesentis.github.io/playground/06-mouse-offset-curvature/",
+    "abstract": "Vintage background noise created with an image and CSS",
+    "link": "https://josesentis.github.io/playground/03-tv-noise/",
     "date": "2020-03-17",
-    "image": "images/mouse-offset-curvature.jpg"
+    "image": "images/tv-noise.jpg"
   },
   {
     "title": "Color Iteration",
-    "abstract": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
-    "link": "https://josesentis.github.io/playground/05-rgb-distortion/",
+    "abstract": "Iteration of a mouse trail colors in time using p5.js",
+    "link": "https://josesentis.github.io/playground/04-color-iteration/",
     "date": "2020-03-22",
-    "image": "images/rgb-distortion.jpg"
+    "image": "images/color-iteration.jpg"
   },
   {
-    "title": "RGB distortion",
-    "abstract": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
-    "link": "https://josesentis.github.io/playground/05-rgb-distortion/",
+    "title": "Geometric Typography",
+    "abstract": "Creation of a dynamic typography element playing with geometry and p5.js",
+    "link": "https://josesentis.github.io/playground/05-geometric-typography/",
     "date": "20-04-3",
-    "image": "images/rgb-distortion.jpg"
+    "image": "images/geometric-typography.jpg"
   }
 ]
