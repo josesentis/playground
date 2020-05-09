@@ -17,7 +17,7 @@ const ballSpeed = 3;
 let ballX = ballSize / 2;
 let ballY = ballSize / 2;
 let ballDirectionX = 1;
-let ballDirectionY = -1;
+let ballDirectionY = 1;
 
 // racket settings
 const keySpeed = 10;
@@ -32,7 +32,7 @@ function setup() {
   createCanvas(canvasSize, canvasSize);
 
   ballX = randomIntFromInterval(minCanvasPosition, maxCanvasPosition);
-  ballY = randomIntFromInterval(minCanvasPosition, maxCanvasPosition);
+  ballDirectionX =  Math.random() < 0.5 ? 1 : -1;
   colorIteration = randomIntFromInterval(0, bgColors.length - 1);
 }
 
