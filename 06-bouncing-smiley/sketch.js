@@ -1,23 +1,28 @@
 // game settings
-const ballSize = 120;
-const ballSpeed = 3;
+const ballSize = 100;
+const racketHeight = 25;
+const racketWidth = 80;
 const canvasSize = 500;
 const minCanvasPosition = 0 + ballSize / 2;
 const maxCanvasPosition = 0 + canvasSize - ballSize / 2;
-let ballX = ballSize / 2;
-let ballY = ballSize / 2;
+let collision = false;
 
 // styling settings
 const bgColors = ['#a1ffed', '#f9aaaa', '#ddffab'];
 const fillColors = ['#a1c9ff', '#fef7ad', '#abffb4'];
+let colorIteration = 1;
 
-// game variables
+// ball settings
+const ballSpeed = 3;
+let ballX = ballSize / 2;
+let ballY = ballSize / 2;
 let ballDirectionX = 1;
 let ballDirectionY = -1;
-let colorIteration = 1;
-let collision = false;
 
-// min and max included
+// racket settings
+const racketY = canvasSize - racketHeight - 20;
+let racketX = 0;
+
 function randomIntFromInterval(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
@@ -33,14 +38,18 @@ function setup() {
 function draw() {
   background(bgColors[colorIteration]);
   noStroke();
-  fill(fillColors[colorIteration]);
 
   // create motion
   ballX = ballX + ballDirectionX * ballSpeed;
   ballY = ballY + ballDirectionY * ballSpeed;
 
   // creates ball
+  fill(fillColors[colorIteration]);
   ellipse(ballX, ballY, ballSize, ballSize);
+
+  // creates racket
+  fill(255);
+  rect(racketX, racketY, racketWidth, racketHeight);
 
   // canvas collision
   if(ballX <= minCanvasPosition || ballX >= maxCanvasPosition) {
