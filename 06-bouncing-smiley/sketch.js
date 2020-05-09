@@ -25,6 +25,11 @@ const keySpeed = 10;
 const racketY = canvasSize - racketHeight - 20;
 let racketX = 0;
 
+// text settings
+const gameOverText = 'GAME OVER';
+const textX = canvasSize / 2;
+const textY = canvasSize / 2;
+
 function randomIntFromInterval(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
@@ -38,50 +43,57 @@ function setup() {
 }
 
 function draw() {
-  if (!gameOver) {
+  // if (!gameOver) {
     background(bgColors[colorIteration]);
     noStroke();
 
-    // create motion
-    ballX = ballX + ballDirectionX * ballSpeed;
-    ballY = ballY + ballDirectionY * ballSpeed;
+  //   // create motion
+  //   ballX = ballX + ballDirectionX * ballSpeed;
+  //   ballY = ballY + ballDirectionY * ballSpeed;
 
-    // creates ball
+  //   // creates ball
+  //   fill(fillColors[colorIteration]);
+  //   ellipse(ballX, ballY, ballSize, ballSize);
+
+  //   // creates racket
+  //   fill(255);
+  //   rect(racketX, racketY, racketWidth, racketHeight);
+
+  //   // canvas side collision
+  //   if (ballX <= minCanvasPosition || ballX >= maxCanvasPosition) {
+  //     ballDirectionX = ballDirectionX * -1;
+  //     collision = true;
+  //   }
+
+  //   // canvas top collision
+  //   // if (ballY <= minCanvasPosition || ballY >= maxCanvasPosition) {
+  //   if (ballY <= minCanvasPosition) {
+  //     ballDirectionY = ballDirectionY * -1;
+  //     collision = true;
+  //   }
+
+  //   // collision control
+  //   if (collision === true) {
+  //     colorIteration = (colorIteration + 1) % bgColors.length;
+  //     collision = false;
+  //   }
+
+  //   if (ballY >= maxCanvasPosition) {
+  //     gameOver = true;
+  //   }
+
+  //   // key control
+  //   if (keyIsDown(RIGHT_ARROW) && (racketX + racketWidth) < canvasSize) {
+  //     racketX = racketX + keySpeed;
+  //   } else if (keyIsDown(LEFT_ARROW) && racketX > 0) {
+  //     racketX = racketX - keySpeed;
+  //   }
+  // } else {
+
+    textSize(50);
+    textAlign(CENTER, CENTER);
+    textFont('Helvetica');
     fill(fillColors[colorIteration]);
-    ellipse(ballX, ballY, ballSize, ballSize);
-
-    // creates racket
-    fill(255);
-    rect(racketX, racketY, racketWidth, racketHeight);
-
-    // canvas side collision
-    if (ballX <= minCanvasPosition || ballX >= maxCanvasPosition) {
-      ballDirectionX = ballDirectionX * -1;
-      collision = true;
-    }
-
-    // canvas top collision
-    // if (ballY <= minCanvasPosition || ballY >= maxCanvasPosition) {
-    if (ballY <= minCanvasPosition) {
-      ballDirectionY = ballDirectionY * -1;
-      collision = true;
-    }
-
-    // collision control
-    if (collision === true) {
-      colorIteration = (colorIteration + 1) % bgColors.length;
-      collision = false;
-    }
-
-    if (ballY >= maxCanvasPosition) {
-      gameOver = true;
-    }
-
-    // key control
-    if (keyIsDown(RIGHT_ARROW) && (racketX + racketWidth) < canvasSize) {
-      racketX = racketX + keySpeed;
-    } else if (keyIsDown(LEFT_ARROW) && racketX > 0) {
-      racketX = racketX - keySpeed;
-    }
-  }
+    text(gameOverText, 10, 10, canvasSize, canvasSize);
+  // }
 }
