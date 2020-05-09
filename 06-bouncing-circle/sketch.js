@@ -1,19 +1,15 @@
-const ballHeight = 100;
-const ballWidth = 100;
-const ballSpeed = 2;
+const ballSize = 120;
+const ballSpeed = 3;
 const canvasSize = 500;
 const mainColor = 'red';
 const backgroundColor = '#f5f5f5';
-
-const minX = 0 + ballWidth / 2;
-const minX = 0 + canvasSize - ballWidth / 2;
-const minY = 0 + ballHeight / 2;
-const minX = 0 + canvasSize - ballHeight / 2;
+const minCanvasPosition = 0 + ballSize / 2;
+const maxCanvasPosition = 0 + canvasSize - ballSize / 2;
 
 let ballX = 50;
 let ballY = 150;
-// let ballX = ballWidth / 2;
-// let ballY = ballHeight / 2;
+// let ballX = ballSize / 2;
+// let ballY = ballSize / 2;
 let ballDirectionX = 1;
 let ballDirectionY = -1;
 
@@ -24,8 +20,8 @@ function randomIntFromInterval(min, max) { // min and max included
 function setup() {
   createCanvas(canvasSize, canvasSize);
 
-  ballX = randomIntFromInterval(0 + ballWidth / 2, canvasSize - ballWidth / 2);
-  ballY = randomIntFromInterval(0 + ballHeight / 2, canvasSize - ballHeight / 2);
+  ballX = randomIntFromInterval(minCanvasPosition, maxCanvasPosition);
+  ballY = randomIntFromInterval(minCanvasPosition, maxCanvasPosition);
 }
 
 function draw() {
@@ -38,9 +34,9 @@ function draw() {
   ballY = ballY + ballDirectionY * ballSpeed;
 
   // creates ball
-  ellipse(ballX, ballY, ballWidth, ballHeight);
+  ellipse(ballX, ballY, ballSize, ballSize);
 
   // canvas collision
-  if(ballX <= 0 + ballWidth / 2 || ballX >= (canvasSize - ballWidth / 2)) ballDirectionX = ballDirectionX * -1;
-  if(ballY <= 0 + ballHeight / 2 || ballY >= (canvasSize - ballHeight / 2)) ballDirectionY = ballDirectionY * -1;
+  if(ballX <= minCanvasPosition || ballX >= maxCanvasPosition) ballDirectionX = ballDirectionX * -1;
+  if(ballY <= minCanvasPosition || ballY >= maxCanvasPosition) ballDirectionY = ballDirectionY * -1;
 }
