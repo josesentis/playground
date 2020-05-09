@@ -66,6 +66,7 @@ function setup() {
   button.style('border', FILL_COLORS[colorIteration]);
   button.style('box-shadow', 'none');
   button.style('color', FILL_COLORS[colorIteration]);
+  button.style('cursor', 'pointer');
   button.style('font-family', 'Helvetica');
   button.style('font-size', '32px');
   button.hide();
