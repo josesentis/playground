@@ -24,6 +24,7 @@ function setup() {
 
   ballX = randomIntFromInterval(minCanvasPosition, maxCanvasPosition);
   ballY = randomIntFromInterval(minCanvasPosition, maxCanvasPosition);
+  colorIteration = randomIntFromInterval(0, bgColors.length - 1);
 }
 
 function draw() {
