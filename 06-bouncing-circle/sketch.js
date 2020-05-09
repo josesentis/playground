@@ -5,14 +5,11 @@ const mainColor = 'red';
 const backgroundColor = '#f5f5f5';
 const minCanvasPosition = 0 + ballSize / 2;
 const maxCanvasPosition = 0 + canvasSize - ballSize / 2;
-
 const bgColors = ['#a1ffed', '#f9aaaa', '#ddffab'];
 const fillColors = ['#a1c9ff', '#fef7ad', '#abffb4'];
 
-let ballX = 50;
-let ballY = 150;
-// let ballX = ballSize / 2;
-// let ballY = ballSize / 2;
+let ballX = ballSize / 2;
+let ballY = ballSize / 2;
 let ballDirectionX = 1;
 let ballDirectionY = -1;
 let colorIteration = 1;
