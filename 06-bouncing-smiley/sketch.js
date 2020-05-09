@@ -1,21 +1,24 @@
+// game settings
 const ballSize = 120;
 const ballSpeed = 3;
 const canvasSize = 500;
-const mainColor = 'red';
-const backgroundColor = '#f5f5f5';
 const minCanvasPosition = 0 + ballSize / 2;
 const maxCanvasPosition = 0 + canvasSize - ballSize / 2;
+let ballX = ballSize / 2;
+let ballY = ballSize / 2;
+
+// styling settings
 const bgColors = ['#a1ffed', '#f9aaaa', '#ddffab'];
 const fillColors = ['#a1c9ff', '#fef7ad', '#abffb4'];
 
-let ballX = ballSize / 2;
-let ballY = ballSize / 2;
+// game variables
 let ballDirectionX = 1;
 let ballDirectionY = -1;
 let colorIteration = 1;
 let collision = false;
 
-function randomIntFromInterval(min, max) { // min and max included
+// min and max included
+function randomIntFromInterval(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
