@@ -28,10 +28,10 @@ let racketX = 0;
 // game over settings
 const GAME_OVER_TEXT = 'GAME OVER';
 const BUTTON_TEXT = 'Restart';
-const buttonWidth = 100;
-const buttonHeight = 40;
+const buttonWidth = 150;
+const buttonHeight = 50;
 const buttonX = canvasSize / 2 - buttonWidth / 2;
-const buttonY = canvasSize / 2 - buttonHeight / 2;
+const buttonY = canvasSize / 3 * 2 - buttonHeight / 2;
 let button;
 
 function randomIntFromInterval(min, max) {
@@ -67,7 +67,8 @@ function setup() {
   button.style('box-shadow', 'none');
   button.style('color', FILL_COLORS[colorIteration]);
   button.style('font-family', 'Helvetica');
-  button.style('font-size', 32);
+  button.style('font-size', '32px');
+  button.hide();
 }
 
 function draw() {
@@ -123,7 +124,7 @@ function draw() {
     textFont('Helvetica');
     background('#f5f5f5');
     fill(0);
-    text(GAME_OVER_TEXT, 0, 0, canvasSize, canvasSize / 3 * 2);
+    text(GAME_OVER_TEXT, 0, 0, canvasSize, canvasSize);
 
     button.show();
   }
