@@ -101,7 +101,10 @@ function draw() {
     }
 
     // paddle collision after knowing game over or not
-    if (ballY + ballSize / 2 === paddleY && ballX >= paddleX && ballX + ballSize / 2 <= (paddleX + paddleWidth)) {
+    if (ballY + ballSize / 2 === paddleY &&
+      ((ballX + (ballSize / 3 / 2) >= paddleX && ballX + (ballSize / 3 / 2) <= (paddleX + paddleWidth)) ||
+        (ballX - (ballSize / 3 / 2) >= paddleX && ballX - (ballSize / 3 / 2) <= (paddleX + paddleWidth)))
+    ) {
       ballDirectionY = -1;
       collision = true;
     }
