@@ -73,6 +73,7 @@ function setup() {
   button.hide();
 
   smiley = createDiv();
+  smiley.id('smiley');
   smiley.style('background-color', FILL_COLORS[colorIteration]);
   smiley.style('border-radius', '50%');
   smiley.style('pointer-events', 'none');
