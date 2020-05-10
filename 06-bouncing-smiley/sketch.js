@@ -1,7 +1,7 @@
 // game settings
 const ballSize = 100;
-const racketHeight = ballSize / 4;
-const racketWidth = ballSize;
+const racketHeight = ballSize / 5;
+const racketWidth = ballSize / 4 * 3;
 const canvasSize = 500;
 const minCanvasPosition = 0 + ballSize / 2;
 const maxCanvasPosition = 0 + canvasSize - ballSize / 2;
@@ -46,9 +46,8 @@ function restart() {
 
 function createNewGame() {
   ballX = randomIntFromInterval(minCanvasPosition, maxCanvasPosition);
-  ballDirectionX = Math.random() < 0.5 ? 1 : -1;
   ballY = ballSize / 2;
-  ballDirectionX = 1;
+  ballDirectionX = Math.random() < 0.5 ? 1 : -1;
   ballDirectionY = 1;
   colorIteration = randomIntFromInterval(0, BG_COLORS.length - 1);
 }
@@ -62,10 +61,10 @@ function setup() {
   button.position(buttonX, buttonY);
   button.mousePressed(restart);
   button.size(buttonWidth, buttonHeight);
-  button.style('background-color', BG_COLORS[colorIteration]);
+  button.style('background-color', FILL_COLORS[colorIteration]);
   button.style('border', FILL_COLORS[colorIteration]);
   button.style('box-shadow', 'none');
-  button.style('color', FILL_COLORS[colorIteration]);
+  button.style('color', BG_COLORS[colorIteration]);
   button.style('cursor', 'pointer');
   button.style('font-family', 'Helvetica');
   button.style('font-size', '32px');
@@ -96,8 +95,13 @@ function draw() {
     }
 
     // canvas top collision
-    // if (ballY <= minCanvasPosition || ballY >= maxCanvasPosition) {
     if (ballY <= minCanvasPosition) {
+      ballDirectionY = ballDirectionY * -1;
+      collision = true;
+    }
+
+    // racket collision
+    if (ballY + ballSize / 2 >= racketY && (ballX - ballSize / 4 >= racketX || ballX + ballSize / 4 <= (racketX + racketWidth))) {
       ballDirectionY = ballDirectionY * -1;
       collision = true;
     }
