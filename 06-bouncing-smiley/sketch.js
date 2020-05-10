@@ -34,6 +34,7 @@ const buttonX = canvasSize / 2 - buttonWidth / 2;
 const buttonY = canvasSize / 3 * 2 - buttonHeight / 2;
 let button;
 let smiley;
+// let smileyImg;
 
 function randomIntFromInterval(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
@@ -54,6 +55,10 @@ function createNewGame() {
   colorIteration = randomIntFromInterval(0, BG_COLORS.length - 1);
 }
 
+// function preload(){
+// 	smileyImg = loadImage('smiley.svg');
+// }
+
 function setup() {
   createCanvas(canvasSize, canvasSize);
   createNewGame();
@@ -72,13 +77,10 @@ function setup() {
   button.style('font-size', '28px');
   button.hide();
 
-  smiley = createDiv();
-  smiley.id('smiley');
-  smiley.style('background-color', FILL_COLORS[colorIteration]);
-  smiley.style('border-radius', '50%');
-  smiley.style('pointer-events', 'none');
-  smiley.position(ballX, ballY);
-  smiley.size(ballSize, ballSize);
+  smiley = new Smiley(ballSize, ballX, ballY, FILL_COLORS[colorIteration]);
+
+  // imageMode(CENTER);
+  // image(smileyImg, ballX, ballY);
 }
 
 function draw() {
@@ -91,8 +93,7 @@ function draw() {
     ballY = ballY + ballDirectionY * BALL_SPEED;
 
     // creates ball
-    smiley.style('background-color', FILL_COLORS[colorIteration]);
-    smiley.position(ballX, ballY);
+    smiley.update(ballX, ballY, FILL_COLORS[colorIteration])
 
     // creates paddle
     fill(255);
