@@ -34,7 +34,6 @@ const buttonX = canvasSize / 2 - buttonWidth / 2;
 const buttonY = canvasSize / 3 * 2 - buttonHeight / 2;
 let button;
 let smiley;
-// let smileyImg;
 
 function randomIntFromInterval(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
