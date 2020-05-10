@@ -1,6 +1,13 @@
 [
   {
     "title": "Geometric Typography",
+    "abstract": "Pong game inspired on Acid House's launching animation. Created with p5.js",
+    "link": "https://josesentis.github.io/playground/06-bouncing-smiley/",
+    "date": "2020-05-10",
+    "image": "images/bouncing-smiley.jpg"
+  },
+  {
+    "title": "Geometric Typography",
     "abstract": "Creation of a dynamic typography element playing with geometry and p5.js",
     "link": "https://josesentis.github.io/playground/05-geometric-typography/",
     "date": "2020-04-3",
