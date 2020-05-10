@@ -17,6 +17,7 @@ let colorIteration;
 const BALL_SPEED = 3;
 let ballX;
 let ballY;
+let ballRealX;
 let ballDirectionX;
 let ballDirectionY;
 
@@ -47,6 +48,7 @@ function restart() {
 function createNewGame() {
   ballX = randomIntFromInterval(minCanvasPosition, maxCanvasPosition);
   ballY = ballSize / 2;
+  ballRealX = ballX - ballSize / 2;
   ballDirectionX = Math.random() < 0.5 ? 1 : -1;
   ballDirectionY = 1;
   colorIteration = randomIntFromInterval(0, BG_COLORS.length - 1);
@@ -79,6 +81,7 @@ function draw() {
     // create motion
     ballX = ballX + ballDirectionX * BALL_SPEED;
     ballY = ballY + ballDirectionY * BALL_SPEED;
+    ballRealX = ballX - ballSize / 2;
 
     // creates ball
     fill(FILL_COLORS[colorIteration]);
@@ -106,7 +109,11 @@ function draw() {
     }
 
     // paddle collision
-    if (ballY + ballSize / 2 >= paddleY && (ballX >= paddleX && ballX <= (paddleX + paddleWidth))) {
+    if (
+      ballY + ballSize / 2 >= paddleY &&
+      ((ballRealX >= paddleX && ballRealX <= (paddleX + paddleWidth)) ||
+        (ballRealX + ballSize / 2 >= paddleX && ballRealX + ballSize / 2 <= (paddleX + paddleWidth)))
+    ) {
       ballDirectionY = ballDirectionY * -1;
       collision = true;
     }
