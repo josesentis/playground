@@ -34,7 +34,7 @@ const buttonX = canvasSize / 2 - buttonWidth / 2;
 const buttonY = canvasSize / 3 * 2 - buttonHeight / 2;
 let button;
 let smiley;
-// let smileyImg;
+let smileyImg;
 
 function randomIntFromInterval(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
@@ -55,9 +55,9 @@ function createNewGame() {
   colorIteration = randomIntFromInterval(0, BG_COLORS.length - 1);
 }
 
-// function preload(){
-// 	smileyImg = loadImage('smiley.svg');
-// }
+function preload(){
+	smileyImg = loadImage('smiley.svg');
+}
 
 function setup() {
   createCanvas(canvasSize, canvasSize);
@@ -77,10 +77,7 @@ function setup() {
   button.style('font-size', '28px');
   button.hide();
 
-  smiley = new Smiley(ballSize, ballX, ballY, FILL_COLORS[colorIteration]);
-
-  // imageMode(CENTER);
-  // image(smileyImg, ballX, ballY);
+  smiley = new Smiley(smileyImg, ballSize, ballX, ballY, FILL_COLORS[colorIteration]);
 }
 
 function draw() {
