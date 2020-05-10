@@ -1,7 +1,7 @@
 // game settings
 const ballSize = 100;
-const racketHeight = ballSize / 5;
-const racketWidth = ballSize / 4 * 3;
+const paddleHeight = ballSize / 5;
+const paddleWidth = ballSize / 4 * 3;
 const canvasSize = 500;
 const minCanvasPosition = 0 + ballSize / 2;
 const maxCanvasPosition = 0 + canvasSize - ballSize / 2;
@@ -20,10 +20,10 @@ let ballY;
 let ballDirectionX;
 let ballDirectionY;
 
-// racket settings
+// paddle settings
 const keySpeed = 10;
-const racketY = canvasSize - racketHeight - 20;
-let racketX = 0;
+const paddleY = canvasSize - paddleHeight - 20;
+let paddleX = 0;
 
 // game over settings
 const GAME_OVER_TEXT = 'GAME OVER';
@@ -67,7 +67,7 @@ function setup() {
   button.style('color', BG_COLORS[colorIteration]);
   button.style('cursor', 'pointer');
   button.style('font-family', 'Helvetica');
-  button.style('font-size', '32px');
+  button.style('font-size', '28px');
   button.hide();
 }
 
@@ -84,9 +84,9 @@ function draw() {
     fill(FILL_COLORS[colorIteration]);
     ellipse(ballX, ballY, ballSize, ballSize);
 
-    // creates racket
+    // creates paddle
     fill(255);
-    rect(racketX, racketY, racketWidth, racketHeight);
+    rect(paddleX, paddleY, paddleWidth, paddleHeight);
 
     // canvas side collision
     if (ballX <= minCanvasPosition || ballX >= maxCanvasPosition) {
@@ -100,8 +100,13 @@ function draw() {
       collision = true;
     }
 
-    // racket collision
-    if (ballY + ballSize / 2 >= racketY && (ballX - ballSize / 4 >= racketX || ballX + ballSize / 4 <= (racketX + racketWidth))) {
+    // out of bounds
+    if (ballY >= maxCanvasPosition) {
+      gameOver = true;
+    }
+
+    // paddle collision
+    if (ballY + ballSize / 2 >= paddleY && (ballX >= paddleX && ballX <= (paddleX + paddleWidth))) {
       ballDirectionY = ballDirectionY * -1;
       collision = true;
     }
@@ -112,15 +117,11 @@ function draw() {
       collision = false;
     }
 
-    if (ballY >= maxCanvasPosition) {
-      gameOver = true;
-    }
-
     // key control
-    if (keyIsDown(RIGHT_ARROW) && (racketX + racketWidth) < canvasSize) {
-      racketX = racketX + keySpeed;
-    } else if (keyIsDown(LEFT_ARROW) && racketX > 0) {
-      racketX = racketX - keySpeed;
+    if (keyIsDown(RIGHT_ARROW) && (paddleX + paddleWidth) < canvasSize) {
+      paddleX = paddleX + keySpeed;
+    } else if (keyIsDown(LEFT_ARROW) && paddleX > 0) {
+      paddleX = paddleX - keySpeed;
     }
   } else {
     // adds game over text
