@@ -3,8 +3,8 @@ const ballSize = 100;
 const paddleHeight = ballSize / 5;
 const paddleWidth = ballSize / 4 * 3;
 const canvasSize = 500;
-const minCanvasPosition = 0 + ballSize / 2;
-const maxCanvasPosition = 0 + canvasSize - ballSize / 2;
+const minCanvasPosition = 0;
+const maxCanvasPosition = 0 + canvasSize - ballSize;
 let collision = false;
 let gameOver = false;
 
@@ -33,6 +33,7 @@ const buttonHeight = 50;
 const buttonX = canvasSize / 2 - buttonWidth / 2;
 const buttonY = canvasSize / 3 * 2 - buttonHeight / 2;
 let button;
+let smiley;
 
 function randomIntFromInterval(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
@@ -41,12 +42,13 @@ function randomIntFromInterval(min, max) {
 function restart() {
   gameOver = false;
   button.hide();
+  smiley.show();
   createNewGame();
 }
 
 function createNewGame() {
   ballX = randomIntFromInterval(minCanvasPosition, maxCanvasPosition);
-  ballY = ballSize / 2;
+  ballY = 0;
   ballDirectionX = Math.random() < 0.5 ? 1 : -1;
   ballDirectionY = 1;
   colorIteration = randomIntFromInterval(0, BG_COLORS.length - 1);
@@ -59,8 +61,8 @@ function setup() {
   // adds restart button
   button = createButton(BUTTON_TEXT);
   button.position(buttonX, buttonY);
-  button.mousePressed(restart);
   button.size(buttonWidth, buttonHeight);
+  button.mousePressed(restart);
   button.style('background-color', FILL_COLORS[colorIteration]);
   button.style('border', FILL_COLORS[colorIteration]);
   button.style('box-shadow', 'none');
@@ -69,6 +71,13 @@ function setup() {
   button.style('font-family', 'Helvetica');
   button.style('font-size', '28px');
   button.hide();
+
+  smiley = createDiv();
+  smiley.style('background-color', FILL_COLORS[colorIteration]);
+  smiley.style('border-radius', '50%');
+  smiley.style('pointer-events', 'none');
+  smiley.position(ballX, ballY);
+  smiley.size(ballSize, ballSize);
 }
 
 function draw() {
@@ -81,8 +90,8 @@ function draw() {
     ballY = ballY + ballDirectionY * BALL_SPEED;
 
     // creates ball
-    fill(FILL_COLORS[colorIteration]);
-    ellipse(ballX, ballY, ballSize, ballSize);
+    smiley.style('background-color', FILL_COLORS[colorIteration]);
+    smiley.position(ballX, ballY);
 
     // creates paddle
     fill(255);
@@ -101,9 +110,9 @@ function draw() {
     }
 
     // paddle collision after knowing game over or not
-    if (ballY + ballSize / 2 === paddleY &&
-      ((ballX + (ballSize / 3 / 2) >= paddleX && ballX + (ballSize / 3 / 2) <= (paddleX + paddleWidth)) ||
-        (ballX - (ballSize / 3 / 2) >= paddleX && ballX - (ballSize / 3 / 2) <= (paddleX + paddleWidth)))
+    if (ballY + ballSize === paddleY &&
+      ((ballX + (ballSize / 3 * 2) >= paddleX && ballX + (ballSize / 3 * 2) <= (paddleX + paddleWidth)) ||
+        (ballX - (ballSize / 3 * 2) >= paddleX && ballX - (ballSize / 3 * 2) <= (paddleX + paddleWidth)))
     ) {
       ballDirectionY = -1;
       collision = true;
@@ -136,6 +145,7 @@ function draw() {
     text(GAME_OVER_TEXT, 0, 0, canvasSize, canvasSize);
 
     button.show();
+    smiley.hide();
   }
 }
 
