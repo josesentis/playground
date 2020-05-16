@@ -25,7 +25,6 @@ class Smiley {
   }
 
   update = color => {
-    console.log('updating');
     this.smiley.html(SMILEY.replace('%fill%', color));
     // Add speed to location
     this.y = this.y + this.speed;
@@ -36,11 +35,9 @@ class Smiley {
     // If square reaches the bottom
     // Reverse speed
     if (this.y > maxCanvasPosition) {
-      this.speed = this.speed * -0.9;
+      this.speed = this.speed * -0.8;
     }
 
     this.smiley.position(this.x, this.y);
-
-    console.log('New position: ', this.y);
   }
 }

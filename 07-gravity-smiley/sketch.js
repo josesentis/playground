@@ -3,7 +3,7 @@ const ballSize = 100;
 const canvasSize = 500;
 const minCanvasPosition = 0;
 const maxCanvasPosition = 0 + canvasSize - ballSize;
-const gravity = 0.1;
+const gravity = 0.3;
 
 // styling settings
 const BG_COLORS = ['#a1ffed', '#f9aaaa', '#ddffab'];
