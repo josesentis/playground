@@ -1,5 +1,12 @@
 [
   {
+    "title": "Gravity smiley",
+    "abstract": "Plays with gravity using Acid House's creative concept. Created with p5.js",
+    "link": "https://josesentis.github.io/playground/06-bouncing-smiley/",
+    "date": "2020-05-10",
+    "image": "images/gravity-smiley.jpg"
+  },
+  {
     "title": "Bouncing smiley",
     "abstract": "Pong game inspired on Acid House's launching animation. Created with p5.js",
     "link": "https://josesentis.github.io/playground/06-bouncing-smiley/",
