@@ -13,20 +13,34 @@ class Smiley {
   constructor(size, x, y, color) {
     this.x = x;
     this.y = y;
+    this.size = size;
+    this.speed = 0;
 
     this.smiley = createDiv(SMILEY.replace('%fill%', color));
     this.smiley.style('background-color', color);
     this.smiley.style('border-radius', '50%');
     this.smiley.style('pointer-events', 'none');
-    this.smiley.position(x, y);
-    this.smiley.size(size, size);
+    this.smiley.position(this.x, this.y);
+    this.smiley.size(this.size, this.size);
   }
 
-  update = (x, y, color) => {
+  update = color => {
+    console.log('updating');
     this.smiley.html(SMILEY.replace('%fill%', color));
-    this.smiley.position(x, y);
-  }
+    // Add speed to location
+    this.y = this.y + this.speed;
 
-  hide = () => { this.smiley.hide(); }
-  show = () => { this.smiley.show(); }
+    // Add gravity to speed
+    this.speed = this.speed + gravity;
+
+    // If square reaches the bottom
+    // Reverse speed
+    if (this.y > maxCanvasPosition) {
+      this.speed = this.speed * -0.9;
+    }
+
+    this.smiley.position(this.x, this.y);
+
+    console.log('New position: ', this.y);
+  }
 }
