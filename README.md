@@ -5,6 +5,7 @@
 <br>
 <h2>Drops</h2>
 
+* [07-gravity-smiley (05/2020)](https://josesentis.github.io/playground/06-gravity-smiley/)
 * [06-bouncing-smiley (05/2020)](https://josesentis.github.io/playground/06-bouncing-smiley/)
 * [05-geometric-typography (04/2020)](https://josesentis.github.io/playground/05-geometric-typography/)
 * [04-color-iteration (03/2020)](https://josesentis.github.io/playground/04-color-iteration/)
