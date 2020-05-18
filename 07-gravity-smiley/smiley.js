@@ -26,8 +26,9 @@ class Smiley {
   }
 
   update = color => {
+    this.smiley.html(SMILEY.replace('%fill%', color));
+
     if (!this.end) {
-      this.smiley.html(SMILEY.replace('%fill%', color));
       // Add speed to location
       this.y = this.y + this.speed;
 

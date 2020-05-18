@@ -12,7 +12,7 @@ const FILL_COLORS = ['#a1c9ff', '#fef7ad', '#abffb4'];
 let colorIteration;
 
 // ball settings
-let smiley;
+const smileys = [];
 let ballX;
 let ballY;
 
@@ -21,21 +21,33 @@ function randomIntFromInterval(min, max) {
 }
 
 function createNewGame() {
-  ballX = randomIntFromInterval(minCanvasPosition, maxCanvasPosition);
-  ballY = 0;
+  // ballX = randomIntFromInterval(minCanvasPosition, maxCanvasPosition);
+  // ballY = 0;
   colorIteration = randomIntFromInterval(0, BG_COLORS.length - 1);
 }
 
 function setup() {
-  createCanvas(canvasSize, canvasSize);
-  createNewGame();
+  const ctx = createCanvas(canvasSize, canvasSize);
+  const canvasWrapper = document.getElementById('canvas-wrapper');
 
-  smiley = new Smiley(ballSize, ballWeight, FILL_COLORS[colorIteration], ballX, ballY);
+  console.log(canvasWrapper)
+  canvasWrapper.appendChild(ctx);
+  createNewGame();
 }
 
 function draw() {
   background(BG_COLORS[colorIteration]);
   noStroke();
 
-	smiley.update(FILL_COLORS[colorIteration]);
+  smileys.map(smiley => smiley.update(FILL_COLORS[colorIteration]));
+}
+
+function mouseClicked() {
+  if (mouseX <= canvasSize && mouseY <= canvasSize && mouseX >= 0 && mouseY >= 0) {
+    colorIteration = randomIntFromInterval(0, BG_COLORS.length - 1);
+    smileys.push(new Smiley(ballSize, ballWeight, FILL_COLORS[colorIteration], mouseX - ballSize / 2, mouseY - ballSize / 2));
+  }
+
+  // prevent default
+  return false;
 }
