@@ -15,7 +15,7 @@ class Smiley {
     this.y = y;
     this.size = size;
     this.speed = 0;
-    this.weight = weight
+    this.weight = weight;
 
     this.smiley = createDiv(SMILEY.replace('%fill%', color));
     this.smiley.style('background-color', color);
@@ -26,23 +26,23 @@ class Smiley {
   }
 
   update = color => {
-    this.smiley.html(SMILEY.replace('%fill%', color));
-    // Add speed to location
-    this.y = this.y + this.speed;
+    if (!this.end) {
+      this.smiley.html(SMILEY.replace('%fill%', color));
+      // Add speed to location
+      this.y = this.y + this.speed;
 
-    // Add gravity to speed
-    this.speed = this.speed + gravity;
+      // Add gravity to speed
+      this.speed = this.speed + gravity;
 
-    // If square reaches the bottom
-    // Reverse speed
-    console.log("Y: ", this.y);
-    console.log("Speed: ", this.speed);
+      // If square reaches the bottom
+      // Reverse speed
+      if (this.y > maxCanvasPosition) {
+        this.speed = -this.speed * this.weight;
 
-    if (this.y > maxCanvasPosition) {
+        if (this.speed >= 0.2 && this.speed >= 0) this.end = true;
+      }
 
-      this.speed = -this.speed * this.weight;
+      this.smiley.position(this.x, this.y);
     }
-
-    this.smiley.position(this.x, this.y);
   }
 }
