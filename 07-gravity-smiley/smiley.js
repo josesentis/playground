@@ -10,11 +10,12 @@ const SMILEY = `<svg x="0px" y="0px" viewBox="0 0 512 512" style="enable-backgro
 </svg>`
 
 class Smiley {
-  constructor(size, x, y, color) {
+  constructor(size, weight, color, x, y) {
     this.x = x;
     this.y = y;
     this.size = size;
     this.speed = 0;
+    this.weight = weight
 
     this.smiley = createDiv(SMILEY.replace('%fill%', color));
     this.smiley.style('background-color', color);
@@ -34,8 +35,12 @@ class Smiley {
 
     // If square reaches the bottom
     // Reverse speed
+    console.log("Y: ", this.y);
+    console.log("Speed: ", this.speed);
+
     if (this.y > maxCanvasPosition) {
-      this.speed = this.speed * -0.8;
+
+      this.speed = -this.speed * this.weight;
     }
 
     this.smiley.position(this.x, this.y);

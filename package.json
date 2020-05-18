@@ -7,7 +7,7 @@
     "assets:build": "copyfiles -f */cover/*.jpg public/images",
     "build": "yarn assets:build",
     "clean": "rm -rf public/images",
-    "start": "http-server ./ -p 8090 -o",
+    "start": "http-server ./ -p 8080 -o",
     "updeps": "ncu"
   },
   "dependencies": {

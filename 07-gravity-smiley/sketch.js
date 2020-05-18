@@ -1,9 +1,10 @@
 // game settings
 const ballSize = 100;
+const ballWeight = 0.5;
 const canvasSize = 500;
 const minCanvasPosition = 0;
 const maxCanvasPosition = 0 + canvasSize - ballSize;
-const gravity = 0.3;
+const gravity = 0.2;
 
 // styling settings
 const BG_COLORS = ['#a1ffed', '#f9aaaa', '#ddffab'];
@@ -11,6 +12,7 @@ const FILL_COLORS = ['#a1c9ff', '#fef7ad', '#abffb4'];
 let colorIteration;
 
 // ball settings
+let smiley;
 let ballX;
 let ballY;
 
@@ -28,7 +30,7 @@ function setup() {
   createCanvas(canvasSize, canvasSize);
   createNewGame();
 
-  smiley = new Smiley(ballSize, ballX, ballY, FILL_COLORS[colorIteration]);
+  smiley = new Smiley(ballSize, ballWeight, FILL_COLORS[colorIteration], ballX, ballY);
 }
 
 function draw() {
