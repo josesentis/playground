@@ -1,13 +1,15 @@
-(function() {
-    const preloadImages = () => {
-        return new Promise((resolve, reject) => {
-            imagesLoaded(document.querySelectorAll('img'), resolve);
-        });
-    };
+const extrude = (depth = 0) => {
+  let shadow = "";
 
-    preloadImages().then(() => {
-        // Remove the loader
-        document.body.classList.remove('loading');
-        const effect = new RGBDistortion();
-    });
+  for (let i = 1; i <= depth; i++) {
+    shadow += `${i}px ${i}px #000, `;
+  }
+
+  return shadow.slice(0, -2);
+}
+
+(function () {
+  const title = document.getElementById('title');
+
+  title.style.textShadow = extrude(10);
 })();
