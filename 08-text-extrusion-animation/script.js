@@ -11,5 +11,9 @@ const extrude = (depth = 0, color = '#000') => {
 (function () {
   const title = document.getElementById('title');
 
-  title.style.textShadow = extrude(10);
+  // title.style.textShadow = extrude(20);
+
+  setTimeout(() => {
+    title.classList.add('animate');
+  }, 1000);
 })();

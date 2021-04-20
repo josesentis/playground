@@ -1,10 +1,10 @@
 [
   {
     "title": "Text shadow animation",
-    "abstract": "Plays with gravity using Acid House's creative concept. Created with p5.js",
-    "link": "https://josesentis.github.io/playground/08-text-shadow-animation/",
+    "abstract": "Applying a little CSS trick for text animation",
+    "link": "https://josesentis.github.io/playground/08-text-extrusion-animation/",
     "date": "2021-04-20",
-    "image": "images/text-shadow-animation.jpg"
+    "image": "images/text-extrusion-animation.jpg"
   },
   {
     "title": "Gravity smiley",
