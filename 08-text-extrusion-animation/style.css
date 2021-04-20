@@ -10,6 +10,8 @@ body {
 h1 {
   font-size: 120px;
   text-align: center;
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: black;
 }
 
 main {
