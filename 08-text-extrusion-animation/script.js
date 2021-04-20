@@ -10,13 +10,17 @@ const extrude = (depth = 0, color = '#000') => {
 
 (function () {
   const title = document.getElementById('title');
-  // title.style.textShadow = extrude(20); // In order to apply shadow in JS
+  // title.style.textShadow = extrude(30, '#bdb2ff'); // In order to apply shadow in JS
 
   setTimeout(() => {
     title.classList.add('loaded');
   }, 1000);
 
   setTimeout(() => {
-    title.classList.add('animated');
-  }, 1000);
+    const childs = title.getElementsByTagName('span');
+
+    for (let i = 0; i <= childs.length; i++) {
+      childs[i].classList.add('animated');
+    }
+  }, 1500);
 })();

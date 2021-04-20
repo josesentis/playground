@@ -7,32 +7,43 @@ body {
   text-transform: uppercase;
 }
 
-h1 {
-  font-size: 120px;
-  text-align: center;
-}
-
 main {
   align-items: center;
   background: rgb(255,214,165);
-  background: linear-gradient(145deg, rgba(255,214,165,0.9290091036414566) 0%, rgba(253,255,182,0.4416141456582633) 37%, rgba(255,198,255,0.7021183473389356) 100%);
+  background: linear-gradient(145deg, rgba(255,214,165,0.6) 0%, rgba(253,255,182,0.2) 40%, rgba(255,198,255, 0.7) 100%);
   display: flex;
   height: 100%;
   justify-content: center;
 }
 
-.animation {
-  text-shadow: 1px 1px pink, -1px 1px pink, 1px -1px pink, -1px -1px pink;
-  transition: text-shadow .6s cubic-bezier(0.22, 0.12, 0.02, 1.26), opacity .6s cubic-bezier(0.22, 0.12, 0.02, 1.26), transform .6s cubic-bezier(0.22, 0.12, 0.02, 1.26);
+h1 {
+  font-size: 100px;
   opacity: 0;
-  will-change: text-shadow, opacity, transform;
+  text-align: center;
+  transition: opacity .4s ease-out;
+  will-change: opacity;
+}
+
+h1 span {
+  display: block;
 }
 
 .loaded {
   opacity: 1;
 }
 
+.animation {
+  color: #9bf6ff;
+  text-shadow: 1px 1px #bdb2ff, -1px 1px #bdb2ff, 1px -1px #bdb2ff, -1px -1px #bdb2ff;
+  transition: text-shadow .6s cubic-bezier(0.22, 0.12, 0.02, 1.26), transform .6s cubic-bezier(0.22, 0.12, 0.02, 1.26);
+  will-change: text-shadow, transform;
+}
+
+.animation:last-child {
+  transition-delay: 100ms;
+}
+
 .animated {
-  text-shadow: 1px 1px pink, -1px 1px pink, 1px -1px pink, -1px -1px pink, rgb(0 0 0) 1px 1px, rgb(0 0 0) 2px 2px, rgb(0 0 0) 3px 3px, rgb(0 0 0) 4px 4px, rgb(0 0 0) 5px 5px, rgb(0 0 0) 6px 6px, rgb(0 0 0) 7px 7px, rgb(0 0 0) 8px 8px, rgb(0 0 0) 9px 9px, rgb(0 0 0) 10px 10px, rgb(0 0 0) 11px 11px, rgb(0 0 0) 12px 12px, rgb(0 0 0) 13px 13px, rgb(0 0 0) 14px 14px, rgb(0 0 0) 15px 15px, rgb(0 0 0) 16px 16px, rgb(0 0 0) 17px 17px, rgb(0 0 0) 18px 18px, rgb(0 0 0) 19px 19px, rgb(0 0 0) 20px 20px;
-  transform: translate3d(-20px, -20px, 0);
+  text-shadow: 1px 1px #bdb2ff, -1px 1px #bdb2ff, 1px -1px #bdb2ff, -1px -1px #bdb2ff, #bdb2ff 1px 1px, #bdb2ff 2px 2px, #bdb2ff 3px 3px, #bdb2ff 4px 4px, #bdb2ff 5px 5px, #bdb2ff 6px 6px, #bdb2ff 7px 7px, #bdb2ff 8px 8px, #bdb2ff 9px 9px, #bdb2ff 10px 10px, #bdb2ff 11px 11px, #bdb2ff 12px 12px, #bdb2ff 13px 13px, #bdb2ff 14px 14px, #bdb2ff 15px 15px, #bdb2ff 16px 16px, #bdb2ff 17px 17px, #bdb2ff 18px 18px, #bdb2ff 19px 19px, #bdb2ff 20px 20px, #bdb2ff 21px 21px, #bdb2ff 22px 22px, #bdb2ff 23px 23px, #bdb2ff 24px 24px, #bdb2ff 25px 25px, #bdb2ff 26px 26px, #bdb2ff 27px 27px, #bdb2ff 28px 28px, #bdb2ff 29px 29px, #bdb2ff 30px 30px;
+  transform: translate3d(-30px, -30px, 0);
 }
