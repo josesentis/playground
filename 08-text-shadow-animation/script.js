@@ -1,8 +1,8 @@
-const extrude = (depth = 0) => {
+const extrude = (depth = 0, color = '#000') => {
   let shadow = "";
 
   for (let i = 1; i <= depth; i++) {
-    shadow += `${i}px ${i}px #000, `;
+    shadow += `${i}px ${i}px ${color}, `;
   }
 
   return shadow.slice(0, -2);
