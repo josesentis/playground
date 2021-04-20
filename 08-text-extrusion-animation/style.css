@@ -10,8 +10,6 @@ body {
 h1 {
   font-size: 120px;
   text-align: center;
-  -webkit-text-stroke-width: 1px;
-  -webkit-text-stroke-color: black;
 }
 
 main {
@@ -22,11 +20,12 @@ main {
 }
 
 .animation {
+  text-shadow: 1px 1px pink, -1px 1px pink, 1px -1px pink, -1px -1px pink;
   transition: all .6s cubic-bezier(0.22, 0.12, 0.02, 1.26);
   will-change: text-shadow;
 }
 
 .animate {
-  text-shadow: rgb(0 0 0) 1px 1px, rgb(0 0 0) 2px 2px, rgb(0 0 0) 3px 3px, rgb(0 0 0) 4px 4px, rgb(0 0 0) 5px 5px, rgb(0 0 0) 6px 6px, rgb(0 0 0) 7px 7px, rgb(0 0 0) 8px 8px, rgb(0 0 0) 9px 9px, rgb(0 0 0) 10px 10px, rgb(0 0 0) 11px 11px, rgb(0 0 0) 12px 12px, rgb(0 0 0) 13px 13px, rgb(0 0 0) 14px 14px, rgb(0 0 0) 15px 15px, rgb(0 0 0) 16px 16px, rgb(0 0 0) 17px 17px, rgb(0 0 0) 18px 18px, rgb(0 0 0) 19px 19px, rgb(0 0 0) 20px 20px;
+  text-shadow: 1px 1px pink, -1px 1px pink, 1px -1px pink, -1px -1px pink, rgb(0 0 0) 1px 1px, rgb(0 0 0) 2px 2px, rgb(0 0 0) 3px 3px, rgb(0 0 0) 4px 4px, rgb(0 0 0) 5px 5px, rgb(0 0 0) 6px 6px, rgb(0 0 0) 7px 7px, rgb(0 0 0) 8px 8px, rgb(0 0 0) 9px 9px, rgb(0 0 0) 10px 10px, rgb(0 0 0) 11px 11px, rgb(0 0 0) 12px 12px, rgb(0 0 0) 13px 13px, rgb(0 0 0) 14px 14px, rgb(0 0 0) 15px 15px, rgb(0 0 0) 16px 16px, rgb(0 0 0) 17px 17px, rgb(0 0 0) 18px 18px, rgb(0 0 0) 19px 19px, rgb(0 0 0) 20px 20px;
   transform: translate3d(-20px, -20px, 0);
 }
