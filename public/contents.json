@@ -1,7 +1,7 @@
 [
   {
-    "title": "Text shadow animation",
-    "abstract": "Applying a little CSS trick for text animation",
+    "title": "Text extrusion animation",
+    "abstract": "Applying a CSS shadows trick for text extrusion animation",
     "link": "https://josesentis.github.io/playground/08-text-extrusion-animation/",
     "date": "2021-04-20",
     "image": "images/text-extrusion-animation.jpg"
