@@ -34,6 +34,7 @@ const matcapTexture = textureLoader.load('/textures/matcaps/7.png');
  * Mesh
  */
 let textMesh;
+let donuts = [];
 
 /**
  * Fonts
@@ -48,7 +49,7 @@ Developer
 
 fontLoader.load('/fonts/helvetiker_regular.typeface.json', font => {
   const textGeometry = new THREE.TextGeometry(
-    text,
+    'Hello Three.js',
     {
       font,
       size: 0.5,
@@ -73,19 +74,30 @@ fontLoader.load('/fonts/helvetiker_regular.typeface.json', font => {
   const donutGeometry = new THREE.TorusGeometry(0.3, 0.2, 20, 45);
 
   for (let i = 0; i <= 350; i++) {
-    const donut = new THREE.Mesh(donutGeometry, material);
+    donuts[i] = new THREE.Mesh(donutGeometry, material);
 
-    donut.position.x = (Math.random() - 0.5) * 18;
-    donut.position.y = (Math.random() - 0.5) * 18;
-    donut.position.z = (Math.random() - 0.5) * 18;
+    // donut.position.
+    // donut.position.
+    // donut.position.
 
-    donut.rotation.x = Math.random() * Math.PI;
-    donut.rotation.y = Math.random() * Math.PI;
+    // donut.rotation.x = Math.random() * Math.PI;
+    // donut.rotation.y = Math.random() * Math.PI;
 
-    const scale = Math.random();
-    donut.scale.set(scale, scale, scale);
+    donuts[i].endposition = {
+      x: (Math.random() - 0.5) * 18,
+      y: (Math.random() - 0.5) * 18,
+      z: (Math.random() - 0.5) * 18
+    }
 
-    group.add(donut);
+    donuts[i].endrotation = {
+      x: Math.random() * Math.PI,
+      y: Math.random() * Math.PI
+    }
+
+    // const scale = Math.random();
+    // donut[i].scale.set(scale, scale, scale);
+
+    group.add(donuts[i]);
   }
 });
 
