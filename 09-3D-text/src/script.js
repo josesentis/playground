@@ -20,6 +20,10 @@ const scene = new THREE.Scene();
 const axesHelper = new THREE.AxesHelper();
 scene.add(axesHelper);
 
+// Group
+const group = new THREE.Group();
+scene.add(group);
+
 /**
  * Textures
  */
@@ -30,6 +34,7 @@ const matcapTexture = textureLoader.load('/textures/matcaps/7.png');
  * Fonts
  */
 const fontLoader = new THREE.FontLoader();
+
 fontLoader.load('/fonts/helvetiker_regular.typeface.json', font => {
   const textGeometry = new THREE.TextGeometry(
     'Hello Three.js',
@@ -52,7 +57,7 @@ fontLoader.load('/fonts/helvetiker_regular.typeface.json', font => {
   });
   // textMaterial.wireframe = true;
   const textMesh = new THREE.Mesh(textGeometry, material);
-  scene.add(textMesh);
+  group.add(textMesh);
 
   const donutGeometry = new THREE.TorusGeometry(0.3, 0.2, 20, 45);
 
@@ -69,7 +74,7 @@ fontLoader.load('/fonts/helvetiker_regular.typeface.json', font => {
     const scale = Math.random();
     donut.scale.set(scale, scale, scale);
 
-    scene.add(donut);
+    group.add(donut);
   }
 });
 
@@ -139,10 +144,6 @@ const clock = new THREE.Clock();
 
 const tick = () => {
   // Update camera on mouse move
-  // camera.position.x = cursor.x * 10;
-  // camera.position.y = cursor.y * 10;
-  // camera.lookAt(0, 0);
-
   gsap.to(camera.position, {
     duration: 1,
     x: cursor.x * 10,
@@ -150,6 +151,10 @@ const tick = () => {
     onUpdate: function () {
       camera.lookAt(new THREE.Vector3(0, 0, 0));
     }
+  });
+
+  gsap.to(group.rotation, {
+    y: elapsedTime * 2 * Math.PI
   });
 
   const elapsedTime = clock.getElapsedTime();
