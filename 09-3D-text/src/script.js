@@ -25,9 +25,14 @@ const group = new THREE.Group();
 scene.add(group);
 
 /**
+ * Loading manager
+ */
+const loader = new THREE.LoadingManager();
+
+/**
  * Textures
  */
-const textureLoader = new THREE.TextureLoader();
+const textureLoader = new THREE.TextureLoader(loader);
 const matcapTexture = textureLoader.load('/textures/matcaps/7.png');
 
 /**
@@ -39,7 +44,7 @@ let donuts = [];
 /**
  * Fonts
  */
-const fontLoader = new THREE.FontLoader();
+const fontLoader = new THREE.FontLoader(loader);
 
 const text = `
 Creative
@@ -143,7 +148,7 @@ window.addEventListener('resize', () => {
 const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 100);
 camera.position.x = 1;
 camera.position.y = 1;
-camera.position.z = 5;
+camera.position.z = 20;
 scene.add(camera);
 
 // Controls
@@ -162,10 +167,17 @@ renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 /**
  * Animate
  */
-
 const clock = new THREE.Clock();
 
+const init = () => {
+  console.log('Init');
+
+
+};
+
 const tick = () => {
+  console.log('Tick');
+
   const elapsedTime = clock.getElapsedTime();
 
   // Update camera on mouse move
@@ -202,4 +214,25 @@ const tick = () => {
   window.requestAnimationFrame(tick);
 }
 
-tick();
+/**
+ * Initialize
+ */
+
+// loader.onStart = () => {
+//   console.log('On Start');
+// };
+
+// loader.onProgress = (item, loaded, total) => {
+//   console.log('On Progress', item, loaded, total);
+// };
+
+loader.onLoad = () => {
+  console.log('Loaded');
+
+  init();
+  tick();
+};
+
+// loader.onError = () => {
+//   console.log('On Error');
+// };
