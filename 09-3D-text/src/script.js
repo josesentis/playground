@@ -31,13 +31,24 @@ const textureLoader = new THREE.TextureLoader();
 const matcapTexture = textureLoader.load('/textures/matcaps/7.png');
 
 /**
+ * Mesh
+ */
+let textMesh;
+
+/**
  * Fonts
  */
 const fontLoader = new THREE.FontLoader();
 
+const text = `
+Creative
+Frontend
+Developer
+`;
+
 fontLoader.load('/fonts/helvetiker_regular.typeface.json', font => {
   const textGeometry = new THREE.TextGeometry(
-    'Hello Three.js',
+    text,
     {
       font,
       size: 0.5,
@@ -56,7 +67,7 @@ fontLoader.load('/fonts/helvetiker_regular.typeface.json', font => {
     matcap: matcapTexture
   });
   // textMaterial.wireframe = true;
-  const textMesh = new THREE.Mesh(textGeometry, material);
+  textMesh = new THREE.Mesh(textGeometry, material);
   group.add(textMesh);
 
   const donutGeometry = new THREE.TorusGeometry(0.3, 0.2, 20, 45);
@@ -64,9 +75,9 @@ fontLoader.load('/fonts/helvetiker_regular.typeface.json', font => {
   for (let i = 0; i <= 350; i++) {
     const donut = new THREE.Mesh(donutGeometry, material);
 
-    donut.position.x = (Math.random() - 0.5) * 20;
-    donut.position.y = (Math.random() - 0.5) * 20;
-    donut.position.z = (Math.random() - 0.5) * 20;
+    donut.position.x = (Math.random() - 0.5) * 18;
+    donut.position.y = (Math.random() - 0.5) * 18;
+    donut.position.z = (Math.random() - 0.5) * 18;
 
     donut.rotation.x = Math.random() * Math.PI;
     donut.rotation.y = Math.random() * Math.PI;
@@ -143,6 +154,8 @@ renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 const clock = new THREE.Clock();
 
 const tick = () => {
+  const elapsedTime = clock.getElapsedTime();
+
   // Update camera on mouse move
   gsap.to(camera.position, {
     duration: 1,
@@ -154,10 +167,18 @@ const tick = () => {
   });
 
   gsap.to(group.rotation, {
-    y: elapsedTime * 2 * Math.PI
+    duration: 25,
+    x: Math.sin(elapsedTime),
+    y: Math.cos(elapsedTime)
   });
 
-  const elapsedTime = clock.getElapsedTime();
+  if (textMesh) {
+    gsap.to(textMesh.rotation, {
+      duration: 20,
+      x: - Math.sin(elapsedTime),
+      y: - Math.cos(elapsedTime)
+    });
+  }
 
   // Update controls
   // controls.update();
