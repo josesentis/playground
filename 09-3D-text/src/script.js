@@ -8,7 +8,11 @@ import gsap from 'gsap';
  * Base
  */
 // Debug
-const gui = new dat.GUI();
+// const gui = new dat.GUI();
+
+// Controls
+// const controls = new OrbitControls(camera, canvas);
+// controls.enableDamping = true;
 
 // Canvas
 const canvas = document.querySelector('canvas.webgl')
@@ -81,13 +85,6 @@ fontLoader.load('/fonts/helvetiker_regular.typeface.json', font => {
   for (let i = 0; i <= 350; i++) {
     donuts[i] = new THREE.Mesh(donutGeometry, material);
 
-    // donut.position.
-    // donut.position.
-    // donut.position.
-
-    // donut.rotation.x = Math.random() * Math.PI;
-    // donut.rotation.y = Math.random() * Math.PI;
-
     donuts[i].endposition = {
       x: (Math.random() - 0.5) * 18,
       y: (Math.random() - 0.5) * 18,
@@ -99,8 +96,8 @@ fontLoader.load('/fonts/helvetiker_regular.typeface.json', font => {
       y: Math.random() * Math.PI
     }
 
-    // const scale = Math.random();
-    // donut[i].scale.set(scale, scale, scale);
+    const scale = Math.random();
+    donuts[i].scale.set(scale, scale, scale);
 
     group.add(donuts[i]);
   }
@@ -151,10 +148,6 @@ camera.position.y = 1;
 camera.position.z = 20;
 scene.add(camera);
 
-// Controls
-// const controls = new OrbitControls(camera, canvas);
-// controls.enableDamping = true;
-
 /**
  * Renderer
  */
@@ -170,14 +163,34 @@ renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 const clock = new THREE.Clock();
 
 const init = () => {
-  console.log('Init');
+  gsap.to(camera.position, {
+    duration: 1,
+    z: 10,
+    onUpdate: function () {
+      camera.lookAt(new THREE.Vector3(0, 0, 0));
+    },
+    ease: "power2.out"
+  });
 
+  for (let i = 0; i <= 350; i++) {
+    gsap.to(donuts[i].position, {
+      duration: 1,
+      x: donuts[i].endposition.x,
+      y: donuts[i].endposition.y,
+      z: donuts[i].endposition.z,
+      ease: "power2.out"
+    });
 
+    gsap.to(donuts[i].rotation, {
+      duration: 1,
+      x: donuts[i].endrotation.x,
+      y: donuts[i].endrotation.y,
+      ease: "power2.out"
+    });
+  }
 };
 
 const tick = () => {
-  console.log('Tick');
-
   const elapsedTime = clock.getElapsedTime();
 
   // Update camera on mouse move
