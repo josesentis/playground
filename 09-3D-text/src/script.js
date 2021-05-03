@@ -169,7 +169,7 @@ const init = () => {
     onUpdate: function () {
       camera.lookAt(new THREE.Vector3(0, 0, 0));
     },
-    ease: "power2.out"
+    ease: "power4.out"
   });
 
   for (let i = 0; i <= 350; i++) {
@@ -178,14 +178,14 @@ const init = () => {
       x: donuts[i].endposition.x,
       y: donuts[i].endposition.y,
       z: donuts[i].endposition.z,
-      ease: "power2.out"
+      ease: "power4.out"
     });
 
     gsap.to(donuts[i].rotation, {
       duration: 1,
       x: donuts[i].endrotation.x,
       y: donuts[i].endrotation.y,
-      ease: "power2.out"
+      ease: "power4.out"
     });
   }
 };
@@ -242,8 +242,10 @@ const tick = () => {
 loader.onLoad = () => {
   console.log('Loaded');
 
-  init();
-  tick();
+  setTimeout(() => {
+    init();
+    tick();
+  }, 500);
 };
 
 // loader.onError = () => {
