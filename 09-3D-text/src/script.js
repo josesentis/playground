@@ -1,7 +1,7 @@
 import './style.css'
 import * as THREE from 'three'
 // import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
-import * as dat from 'dat.gui'
+// import * as dat from 'dat.gui'
 import gsap from 'gsap';
 
 /**
@@ -15,14 +15,14 @@ import gsap from 'gsap';
 // controls.enableDamping = true;
 
 // Canvas
-const canvas = document.querySelector('canvas.webgl')
+const canvas = document.querySelector('canvas.webgl');
 
 // Scene
 const scene = new THREE.Scene();
 
 // Axis helper
-const axesHelper = new THREE.AxesHelper();
-scene.add(axesHelper);
+// const axesHelper = new THREE.AxesHelper();
+// scene.add(axesHelper);
 
 // Group
 const group = new THREE.Group();
@@ -51,14 +51,14 @@ let donuts = [];
 const fontLoader = new THREE.FontLoader(loader);
 
 const text = `
-Creative
-Frontend
-Developer
+creative
+frontend
+developer
 `;
 
 fontLoader.load('/fonts/helvetiker_regular.typeface.json', font => {
   const textGeometry = new THREE.TextGeometry(
-    'Hello Three.js',
+    text,
     {
       font,
       size: 0.5,
@@ -230,24 +230,9 @@ const tick = () => {
 /**
  * Initialize
  */
-
-// loader.onStart = () => {
-//   console.log('On Start');
-// };
-
-// loader.onProgress = (item, loaded, total) => {
-//   console.log('On Progress', item, loaded, total);
-// };
-
 loader.onLoad = () => {
-  console.log('Loaded');
-
   setTimeout(() => {
     init();
     tick();
   }, 500);
 };
-
-// loader.onError = () => {
-//   console.log('On Error');
-// };
