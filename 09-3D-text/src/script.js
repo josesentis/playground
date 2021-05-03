@@ -56,7 +56,7 @@ frontend
 developer
 `;
 
-fontLoader.load('/fonts/helvetiker_regular.typeface.json', font => {
+fontLoader.load('./fonts/helvetiker_regular.typeface.json', font => {
   const textGeometry = new THREE.TextGeometry(
     text,
     {

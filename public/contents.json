@@ -1,5 +1,12 @@
 [
   {
+    "title": "3D text",
+    "abstract": "Creates a scene using a 3D text and other geometries",
+    "link": "https://josesentis.github.io/playground/08-text-extrusion-animation/dist/",
+    "date": "2021-05-03",
+    "image": "images/3D-text.jpg"
+  },
+  {
     "title": "Text extrusion animation",
     "abstract": "Applying a CSS shadows trick for text extrusion animation",
     "link": "https://josesentis.github.io/playground/08-text-extrusion-animation/",
