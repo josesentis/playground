@@ -249,6 +249,15 @@ const door2Light = new THREE.PointLight('#ff7d46', 2, 5);
 door2Light.position.set(0, 2.35, 3.45);
 house.add(door2Light);
 
+// Flash
+const flash = new THREE.PointLight('#FAFBA5', 20, 500, 1.7);
+flash.position.set(0, 15, 0);
+scene.add(flash);
+
+const sphereSize = 1;
+const pointLightHelper = new THREE.PointLightHelper(flash, sphereSize);
+scene.add(pointLightHelper);
+
 /**
  * Ghosts
 */
@@ -288,9 +297,12 @@ window.addEventListener('resize', () => {
  */
 // Base camera
 const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 100);
-camera.position.x = 3;
-camera.position.y = 3;
-camera.position.z = 8;
+// camera.position.x = 3;
+// camera.position.y = 3;
+// camera.position.z = 8;
+camera.position.x = 15;
+camera.position.y = 15;
+camera.position.z = 20;
 scene.add(camera);
 
 // Controls
