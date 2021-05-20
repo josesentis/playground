@@ -17,7 +17,7 @@ const scene = new THREE.Scene();
 
 // Fog
 const fog = new THREE.Fog('#262837', 2, 15);
-scene.fog = fog;
+// scene.fog = fog;
 
 /**
  * Textures
@@ -382,7 +382,9 @@ const tick = () => {
   ghost3.position.x = Math.cos(ghost3Angle) * (6 + Math.sin(elapsedTime * 4));
   ghost3.position.z = Math.sin(ghost3Angle) * (6 + Math.sin(elapsedTime * 4));
   ghost3.position.y = Math.sin(elapsedTime * 3);
-  // ghost3.position.y = 2;
+
+  // Update flash
+  flash.intensity = Math.sin(elapsedTime * 4) * Math.sin(elapsedTime * 8) + Math.cos(elapsedTime * 12) * Math.cos(elapsedTime * 2);
 
   // Render
   renderer.render(scene, camera);
