@@ -42,47 +42,45 @@ const createPath = () => {
     z: 0
   }
   let remainingRowSpace = MAX_PATH_WIDTH;
+  let rowNum = 0;
 
-  for (let i = 0; i < 150; i++) {
+  for (let i = 0; i < 20; i++) {
     console.log('INITIAL --------------- ', i);
+    console.log('Row number ', rowNum % 2);
 
     const cobbleStone = new THREE.Mesh(
       cobbleStoneGeometry,
       cobbleStoneMaterial
     );
-
     const ownPosition = cobblestonePosition;
     let ownSize = 0.3 + Math.random() * 0.15;
     let rowChange = false;
-
-    console.log('Size:', ownSize);
-    console.log('Remaining Space:', remainingRowSpace);
-    console.log('Position:', ownPosition);
+    let rowDirection = 1;
 
     if (ownSize > remainingRowSpace) {
       ownSize = remainingRowSpace;
       rowChange = true;
     }
 
+    if (rowNum % 2 === 1) rowDirection = -1;
+
     cobbleStone.scale.x = ownSize;
-    cobbleStone.position.x = ownPosition.x + ownSize / 2;
+    cobbleStone.position.x = ownPosition.x + (ownSize / 2 * rowDirection);
     cobbleStone.position.z = ownPosition.z + 0.1;
     cobbleStone.rotation.x = (Math.random() - 0.5) * 0.1;
     cobbleStone.rotation.z = (Math.random() - 0.5) * 0.1;
     cobbleStone.castShadow = true;
 
     // Before next iteration
-    // if (ownSize > remainingRowSpace) cobblestonePosition.z += 0.2 + COBBLESTONE_SEPARATION;
-
-    // Changes this condition and make it more automatic
-
     if (rowChange) {
       ownSize = remainingRowSpace;
       cobblestonePosition.z += 0.2 + COBBLESTONE_SEPARATION;
-      cobblestonePosition.x = - MAX_PATH_WIDTH / 2;
+      cobblestonePosition.x = (MAX_PATH_WIDTH / 2 * rowDirection);
       remainingRowSpace = MAX_PATH_WIDTH;
+
+      rowNum += 1;
     } else {
-      cobblestonePosition.x += ownSize + COBBLESTONE_SEPARATION;
+      cobblestonePosition.x += (ownSize + COBBLESTONE_SEPARATION) * rowDirection;
       remainingRowSpace -= ownSize + COBBLESTONE_SEPARATION;
     }
 
