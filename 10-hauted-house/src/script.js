@@ -17,7 +17,7 @@ const scene = new THREE.Scene();
 
 // Fog
 const fog = new THREE.Fog('#262837', 2, 15);
-// scene.fog = fog;
+scene.fog = fog;
 
 /**
  * Textures
@@ -250,7 +250,7 @@ door2Light.position.set(0, 2.35, 3.45);
 house.add(door2Light);
 
 // Flash
-const flash = new THREE.PointLight('#FAFBA5', 20, 500, 1.7);
+const flash = new THREE.PointLight('#FAFBA5', 10, 540, 1.7);
 flash.position.set(0, 15, 0);
 scene.add(flash);
 
@@ -297,12 +297,9 @@ window.addEventListener('resize', () => {
  */
 // Base camera
 const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 100);
-// camera.position.x = 3;
-// camera.position.y = 3;
-// camera.position.z = 8;
-camera.position.x = 15;
-camera.position.y = 15;
-camera.position.z = 20;
+camera.position.x = 3;
+camera.position.y = 3;
+camera.position.z = 8;
 scene.add(camera);
 
 // Controls
@@ -384,7 +381,18 @@ const tick = () => {
   ghost3.position.y = Math.sin(elapsedTime * 3);
 
   // Update flash
-  flash.intensity = Math.sin(elapsedTime * 4) * Math.sin(elapsedTime * 8) + Math.cos(elapsedTime * 12) * Math.cos(elapsedTime * 2);
+  // flash.intensity = Math.sin(elapsedTime * 4) * Math.sin(elapsedTime * 8) + Math.cos(elapsedTime * 12) * Math.cos(elapsedTime * 2);
+  // flash.power = (Math.sin(elapsedTime / 2) + Math.cos(elapsedTime * 2)) * 2 - 1.5;
+
+  if (Math.random() > 0.93 || flash.power > 100) {
+    if (flash.power < 100)
+      flash.position.set(
+        Math.random() * 400,
+        300 + Math.random() * 200,
+        100
+      );
+    flash.power = 50 + Math.random() * 500;
+  }
 
   // Render
   renderer.render(scene, camera);
