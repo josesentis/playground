@@ -354,6 +354,10 @@ ghost3.shadow.mapSize.height = 256;
 ghost3.shadow.mapSize.width = 256;
 ghost3.shadow.camera.far = 7;
 
+// Add elements to scene
+const path = createPath();
+scene.add(path);
+
 /**
  * Animate
  */
@@ -399,9 +403,5 @@ const tick = () => {
   // Call tick again on the next frame
   // window.requestAnimationFrame(tick);
 }
-
-// Add elements to scene
-const path = createPath();
-scene.add(path);
 
 tick();
