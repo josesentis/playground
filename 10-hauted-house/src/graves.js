@@ -1,5 +1,12 @@
 import * as THREE from 'three';
 
+const generateAngle = () => {
+  const angle = Math.random() * Math.PI * 2;
+
+  if (angle < 0.17 || angle > 6.1) generateAngle();
+  else return angle;
+};
+
 const createGraves = () => {
   // Graves
   const graves = new THREE.Group();
@@ -11,7 +18,7 @@ const createGraves = () => {
 
   // Adds crosses
   for (let i = 0; i < 25; i++) {
-    const angle = Math.random() * Math.PI * 2;
+    const angle = generateAngle();
     const radius = 4.5 + Math.random() * 5.5;
     const x = Math.sin(angle) * radius;
     const y = 0.3 + Math.random() * 0.2;
@@ -34,7 +41,7 @@ const createGraves = () => {
 
   // Adds graves
   for (let i = 0; i < 35; i++) {
-    const angle = Math.random() * Math.PI * 2;
+    const angle = generateAngle();
     const radius = 4.5 + Math.random() * 5.5;
     const x = Math.sin(angle) * radius;
     const y = 0.3 + Math.random() * 0.1;
