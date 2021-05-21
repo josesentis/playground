@@ -43,7 +43,7 @@ const createPath = () => {
   }
   let remainingRowSpace = MAX_PATH_WIDTH;
 
-  for (let i = 0; i < 10; i++) {
+  for (let i = 0; i < 150; i++) {
     const cobbleStone = new THREE.Mesh(
       cobbleStoneGeometry,
       cobbleStoneMaterial
@@ -51,23 +51,35 @@ const createPath = () => {
 
     console.log('Initial position:', cobblestonePosition);
 
-    const ownSize = 0.3 + Math.random() * 0.2;
     const ownPosition = cobblestonePosition;
-
-    cobbleStone.scale.x = ownSize;
+    let ownSize = 0.25 + Math.random() * 0.25;
 
     console.log('Size:', ownSize);
     console.log('Position:', ownPosition);
 
+    // if (ownSize > remainingRowSpace) ownSize = remainingRowSpace;
+
+    cobbleStone.scale.x = ownSize;
     cobbleStone.position.x = ownPosition.x + ownSize / 2;
     cobbleStone.position.z = ownPosition.z + 0.1;
-    // cobbleStone.rotation.y = (Math.random() - 0.5) * 0.4;
-    // cobbleStone.rotation.z = (Math.random() - 0.5) * 0.4;
+    cobbleStone.rotation.x = (Math.random() - 0.5) * 0.1;
+    cobbleStone.rotation.z = (Math.random() - 0.5) * 0.1;
     cobbleStone.castShadow = true;
 
-    cobblestonePosition.x += ownSize + COBBLESTONE_SEPARATION;
-
     path.add(cobbleStone);
+
+    // Before next iteration
+    // if (ownSize > remainingRowSpace) cobblestonePosition.z += 0.2 + COBBLESTONE_SEPARATION;
+
+    // Changes this condition and make it more automatic
+    if (i % 3 === 2) {
+      cobblestonePosition.z += 0.2 + COBBLESTONE_SEPARATION;
+      cobblestonePosition.x = - MAX_PATH_WIDTH / 2;
+    } else {
+      cobblestonePosition.x += ownSize + COBBLESTONE_SEPARATION;
+    }
+
+    remainingRowSpace -= ownSize + COBBLESTONE_SEPARATION;
   }
 
   return path;
