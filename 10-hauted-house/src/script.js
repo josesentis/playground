@@ -1,7 +1,9 @@
-import './style.css'
-import * as THREE from 'three'
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
-import * as dat from 'dat.gui'
+import * as THREE from 'three';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+import * as dat from 'dat.gui';
+
+import './style.css';
+import createPath from './path';
 
 /**
  * Base
@@ -17,7 +19,7 @@ const scene = new THREE.Scene();
 
 // Fog
 const fog = new THREE.Fog('#262837', 2, 15);
-scene.fog = fog;
+// scene.fog = fog;
 
 /**
  * Textures
@@ -79,7 +81,7 @@ floor.position.y = 0;
 scene.add(floor);
 
 const house = new THREE.Group();
-scene.add(house);
+// scene.add(house);
 
 // Walls
 const walls = new THREE.Mesh(
@@ -168,8 +170,29 @@ const bush5 = new THREE.Mesh(bushGeometry, bushMaterial);
 bush5.scale.set(0.15, 0.15, 0.15);
 bush5.position.set(-1.25, 0.05, 2.95);
 
-
 house.add(bush1, bush2, bush3, bush4, bush5);
+
+// Path
+const path = new THREE.Group();
+scene.add(path);
+
+const pathWay = new THREE.Mesh(
+  new THREE.PlaneGeometry(1.4, 20),
+  new THREE.MeshStandardMaterial({ color: '#ff0000' })
+  // new THREE.MeshStandardMaterial({
+  //   map: grassColorTexture,
+  //   aoMap: grassAmbientOcclusionTexture,
+  //   normalMap: grassNormalTexture,
+  //   roughnessMap: grassRoughnessTexture
+  // })
+)
+// pathWay.geometry.setAttribute(
+//   'uv2',
+//   new THREE.Float32BufferAttribute(pathWay.geometry.attributes.uv.array, 2)
+// );
+pathWay.rotation.x = - Math.PI * 0.5;
+pathWay.position.y = 0.01;
+scene.add(pathWay);
 
 // Graves
 const graves = new THREE.Group();
@@ -232,7 +255,8 @@ gui.add(ambientLight, 'intensity').min(0).max(1).step(0.001);
 scene.add(ambientLight);
 
 // Directional light
-const moonLight = new THREE.DirectionalLight('#BB91F2', 0.15);
+// const moonLight = new THREE.DirectionalLight('#BB91F2', 0.15);
+const moonLight = new THREE.DirectionalLight('#FFFFFF', 1);
 moonLight.position.set(4, 5, - 2);
 gui.add(moonLight, 'intensity').min(0).max(1).step(0.001);
 gui.add(moonLight.position, 'x').min(- 5).max(5).step(0.001);
@@ -250,13 +274,9 @@ door2Light.position.set(0, 2.35, 3.45);
 house.add(door2Light);
 
 // Flash
-const flash = new THREE.PointLight('#FAFBA5', 10, 540, 1.7);
+const flash = new THREE.PointLight('#FAFBA5', 5, 540, 1.7);
 flash.position.set(0, 15, 0);
-scene.add(flash);
-
-const sphereSize = 1;
-const pointLightHelper = new THREE.PointLightHelper(flash, sphereSize);
-scene.add(pointLightHelper);
+// scene.add(flash);
 
 /**
  * Ghosts
@@ -297,9 +317,12 @@ window.addEventListener('resize', () => {
  */
 // Base camera
 const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 100);
-camera.position.x = 3;
-camera.position.y = 3;
-camera.position.z = 8;
+// camera.position.x = 3;
+// camera.position.y = 3;
+// camera.position.z = 8;
+camera.position.x = 5;
+camera.position.y = 5;
+camera.position.z = 12;
 scene.add(camera);
 
 // Controls
@@ -371,8 +394,8 @@ const tick = () => {
   ghost1.position.y = Math.sin(elapsedTime);
 
   const ghost2Angle = elapsedTime * 0.05;
-  ghost2.position.x = Math.cos(ghost2Angle) * 5;
-  ghost2.position.z = Math.sin(ghost2Angle) * 5;
+  ghost2.position.x = Math.cos(ghost2Angle) * 3;
+  ghost2.position.z = Math.sin(ghost2Angle) * 3;
   ghost2.position.y = 1 + Math.sin(elapsedTime * 4);
 
   const ghost3Angle = - elapsedTime * 0.25;
@@ -381,16 +404,14 @@ const tick = () => {
   ghost3.position.y = Math.sin(elapsedTime * 3);
 
   // Update flash
-  // flash.intensity = Math.sin(elapsedTime * 4) * Math.sin(elapsedTime * 8) + Math.cos(elapsedTime * 12) * Math.cos(elapsedTime * 2);
-  // flash.power = (Math.sin(elapsedTime / 2) + Math.cos(elapsedTime * 2)) * 2 - 1.5;
-
   if (Math.random() > 0.93 || flash.power > 100) {
-    if (flash.power < 100)
+    if (flash.power < 100) {
       flash.position.set(
         Math.random() * 400,
         300 + Math.random() * 200,
         100
       );
+    }
     flash.power = 50 + Math.random() * 500;
   }
 
@@ -401,4 +422,5 @@ const tick = () => {
   window.requestAnimationFrame(tick);
 }
 
+createPath();
 tick();
