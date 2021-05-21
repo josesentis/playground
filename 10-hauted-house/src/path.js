@@ -1,13 +1,18 @@
 import * as THREE from 'three';
 
+const MAX_PATH_LENGTH = 10;
+const MAX_PATH_WIDTH = 1.4;
+
 const createPath = () => {
   console.log('Create path');
 
   // Path
   const path = new THREE.Group();
+  path.position.y = 0.001;
 
+  // Color under the cobblestones
   const pathWay = new THREE.Mesh(
-    new THREE.PlaneGeometry(1.4, 10),
+    new THREE.PlaneGeometry(MAX_PATH_WIDTH, MAX_PATH_LENGTH),
     new THREE.MeshStandardMaterial({ color: '#444941' })
     // new THREE.MeshStandardMaterial({
     //   map: grassColorTexture,
@@ -21,14 +26,36 @@ const createPath = () => {
   //   'uv2',
   //   new THREE.Float32BufferAttribute(pathWay.geometry.attributes.uv.array, 2)
   // );
-  path.rotation.x = - Math.PI * 0.5;
-  path.position.y = 0.01;
-  path.position.z = 5;
+  pathWay.rotation.x = - Math.PI * 0.5;
+  pathWay.position.z = 5;
 
   path.add(pathWay);
 
   // pathWay.castShadow = true;
   pathWay.receiveShadow = true;
+
+  // Adds cobblestones
+  const cobbleStoneGeometry = new THREE.BoxGeometry(MAX_PATH_WIDTH, 0.1, 0.2);
+  const cobbleStoneMaterial = new THREE.MeshStandardMaterial({ color: '#d0d1c5' });
+
+  let cobblestonePosition = {
+    x: - MAX_PATH_WIDTH / 2,
+    z: 0
+  }
+
+  for (let i = 0; i < 1; i++) {
+    const cobbleStone = new THREE.Mesh(
+      cobbleStoneGeometry,
+      cobbleStoneMaterial
+    );
+    cobbleStone.position.x = cobblestonePosition.x;
+    cobbleStone.position.z = cobblestonePosition.z;
+    // cobbleStone.rotation.y = (Math.random() - 0.5) * 0.4;
+    // cobbleStone.rotation.z = (Math.random() - 0.5) * 0.4;
+    cobbleStone.castShadow = true;
+
+    path.add(cobbleStone);
+  }
 
   return path;
 };
