@@ -4,12 +4,14 @@ import * as dat from 'dat.gui';
 
 import './style.css';
 import createPath from './path';
+import createGhosts from './path';
 
 /**
  * Base
  */
 // Debug
 const gui = new dat.GUI()
+gui.closed = true;
 
 // Canvas
 const canvas = document.querySelector('canvas.webgl')
@@ -19,7 +21,7 @@ const scene = new THREE.Scene();
 
 // Fog
 const fog = new THREE.Fog('#262837', 2, 15);
-// scene.fog = fog;
+scene.fog = fog;
 
 /**
  * Textures
@@ -81,7 +83,7 @@ floor.position.y = 0;
 scene.add(floor);
 
 const house = new THREE.Group();
-// scene.add(house);
+scene.add(house);
 
 // Walls
 const walls = new THREE.Mesh(
@@ -247,26 +249,20 @@ const doorLight = new THREE.PointLight('#ff7d46', 1, 7);
 doorLight.position.set(0, 2.85, 2.7);
 house.add(doorLight);
 
-const door2Light = new THREE.PointLight('#ff7d46', 2, 5);
+const door2Light = new THREE.PointLight('#ff7d46', 1.5, 5);
 door2Light.position.set(0, 2.35, 3.45);
 house.add(door2Light);
 
 // Flash
-const flash = new THREE.PointLight('#FAFBA5', 5, 540, 1.7);
+const flash = new THREE.PointLight('#FAFBA5', 3, 540, 1.7);
 flash.position.set(0, 15, 0);
-// scene.add(flash);
+scene.add(flash);
 
 /**
  * Ghosts
 */
-const ghost1 = new THREE.PointLight('#fcbe2d', 2, 3);
-scene.add(ghost1);
-
-const ghost2 = new THREE.PointLight('#ffefab', 2, 3);
-scene.add(ghost2);
-
-const ghost3 = new THREE.PointLight('#edde53', 2, 3);
-scene.add(ghost3);
+const { ghost1, ghost2, ghost3 } = createGhosts();
+scene.add(ghost1, ghost2, ghost3);
 
 /**
  * Sizes
@@ -295,12 +291,12 @@ window.addEventListener('resize', () => {
  */
 // Base camera
 const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 100);
-// camera.position.x = 3;
-// camera.position.y = 3;
-// camera.position.z = 8;
-camera.position.x = 0;
-camera.position.y = 2;
-camera.position.z = 0;
+camera.position.x = 3;
+camera.position.y = 3;
+camera.position.z = 8;
+// camera.position.x = 0;
+// camera.position.y = 2;
+// camera.position.z = 0;
 scene.add(camera);
 
 // Controls
@@ -325,9 +321,6 @@ renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
 moonLight.castShadow = true;
 doorLight.castShadow = true;
-ghost1.castShadow = true;
-ghost2.castShadow = true;
-ghost3.castShadow = true;
 
 walls.castShadow = true;
 bush1.castShadow = true;
@@ -341,18 +334,6 @@ floor.receiveShadow = true;
 doorLight.shadow.mapSize.height = 256;
 doorLight.shadow.mapSize.width = 256;
 doorLight.shadow.camera.far = 7;
-
-ghost1.shadow.mapSize.height = 256;
-ghost1.shadow.mapSize.width = 256;
-ghost1.shadow.camera.far = 7;
-
-ghost2.shadow.mapSize.height = 256;
-ghost2.shadow.mapSize.width = 256;
-ghost2.shadow.camera.far = 7;
-
-ghost3.shadow.mapSize.height = 256;
-ghost3.shadow.mapSize.width = 256;
-ghost3.shadow.camera.far = 7;
 
 // Add elements to scene
 const path = createPath();
@@ -376,8 +357,8 @@ const tick = () => {
   ghost1.position.y = Math.sin(elapsedTime);
 
   const ghost2Angle = elapsedTime * 0.05;
-  ghost2.position.x = Math.cos(ghost2Angle) * 3;
-  ghost2.position.z = Math.sin(ghost2Angle) * 3;
+  ghost2.position.x = Math.cos(ghost2Angle) * 5;
+  ghost2.position.z = Math.sin(ghost2Angle) * 5;
   ghost2.position.y = 1 + Math.sin(elapsedTime * 4);
 
   const ghost3Angle = - elapsedTime * 0.25;
