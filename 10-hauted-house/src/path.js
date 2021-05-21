@@ -3,6 +3,7 @@ import * as THREE from 'three';
 const MAX_PATH_LENGTH = 10;
 const MAX_PATH_WIDTH = 1.4;
 const COBBLESTONE_SEPARATION = 0.05;
+const COBBLE_Z = 0.2;
 
 const createPath = () => {
   // Path
@@ -13,28 +14,15 @@ const createPath = () => {
   const pathWay = new THREE.Mesh(
     new THREE.PlaneGeometry(1.4, MAX_PATH_LENGTH),
     new THREE.MeshStandardMaterial({ color: '#444941' })
-    // new THREE.MeshStandardMaterial({
-    //   map: grassColorTexture,
-    //   aoMap: grassAmbientOcclusionTexture,
-    //   normalMap: grassNormalTexture,
-    //   roughnessMap: grassRoughnessTexture
-    // })
   );
-
-  // pathWay.geometry.setAttribute(
-  //   'uv2',
-  //   new THREE.Float32BufferAttribute(pathWay.geometry.attributes.uv.array, 2)
-  // );
   pathWay.rotation.x = - Math.PI * 0.5;
-  pathWay.position.z = 5;
+  pathWay.position.z = MAX_PATH_LENGTH / 2;
+  pathWay.receiveShadow = true;
 
   path.add(pathWay);
 
-  // pathWay.castShadow = true;
-  pathWay.receiveShadow = true;
-
   // Adds cobblestones
-  const cobbleStoneGeometry = new THREE.BoxGeometry(1, 0.1, 0.2);
+  const cobbleStoneGeometry = new THREE.BoxGeometry(1, 0.1, COBBLE_Z);
   const cobbleStoneMaterial = new THREE.MeshStandardMaterial({ color: '#d0d1c5' });
 
   let cobblestonePosition = {
@@ -43,15 +31,12 @@ const createPath = () => {
   }
   let remainingRowSpace = MAX_PATH_WIDTH;
   let rowNum = 0;
+  let i = 0;
+  let lastRow = false;
+  let spaceAvailable = true;
 
-  for (let i = 0; i < 20; i++) {
-    console.log('INITIAL --------------- ', i);
-    console.log('Row number ', rowNum % 2);
-
-    const cobbleStone = new THREE.Mesh(
-      cobbleStoneGeometry,
-      cobbleStoneMaterial
-    );
+  while (spaceAvailable) {
+    const cobbleStone = new THREE.Mesh(cobbleStoneGeometry, cobbleStoneMaterial);
     const ownPosition = cobblestonePosition;
     let ownSize = 0.3 + Math.random() * 0.15;
     let rowChange = false;
@@ -71,8 +56,11 @@ const createPath = () => {
     cobbleStone.rotation.z = (Math.random() - 0.5) * 0.1;
     cobbleStone.castShadow = true;
 
+    if (cobbleStone.position.z + COBBLE_Z >= MAX_PATH_LENGTH) lastRow = true;
+
     // Before next iteration
-    if (rowChange) {
+    if (rowChange && lastRow) spaceAvailable = false;
+    else if (rowChange) {
       ownSize = remainingRowSpace;
       cobblestonePosition.z += 0.2 + COBBLESTONE_SEPARATION;
       cobblestonePosition.x = (MAX_PATH_WIDTH / 2 * rowDirection);
@@ -85,7 +73,7 @@ const createPath = () => {
     }
 
     path.add(cobbleStone);
-    console.log('END --------------- ', i);
+    i++;
   }
 
   return path;
