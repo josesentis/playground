@@ -1,14 +1,13 @@
 import * as THREE from 'three';
 
 const createGhosts = () => {
-
-  /**
-   * Shadows
-   */
   const ghost1 = new THREE.PointLight('#fcbe2d', 2, 3);
   const ghost2 = new THREE.PointLight('#ffefab', 2, 3);
   const ghost3 = new THREE.PointLight('#edde53', 2, 3);
 
+  /**
+   * Shadows
+   */
   ghost1.castShadow = true;
   ghost2.castShadow = true;
   ghost3.castShadow = true;
