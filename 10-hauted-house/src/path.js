@@ -76,6 +76,24 @@ const createPath = () => {
     i++;
   }
 
+  // Bushes
+  const bushGeometry = new THREE.SphereGeometry(1, 32, 32);
+  const bushMaterial = new THREE.MeshStandardMaterial({ color: '#89c854' });
+
+  const bush1 = new THREE.Mesh(bushGeometry, bushMaterial);
+  bush1.scale.set(0.15, 0.15, 0.15);
+  bush1.position.set(- MAX_PATH_WIDTH / 2 - 0.1, 0.05, 6);
+
+  const bush2 = new THREE.Mesh(bushGeometry, bushMaterial);
+  bush2.scale.set(0.15, 0.15, 0.15);
+  bush2.position.set(MAX_PATH_WIDTH / 2 + 0.1, 0.04, 8);
+
+  const bush3 = new THREE.Mesh(bushGeometry, bushMaterial);
+  bush3.scale.set(0.1, 0.1, 0.1);
+  bush3.position.set(MAX_PATH_WIDTH / 2 + 0.05, 0.04, 8.2);
+
+  path.add(bush1, bush2, bush3);
+
   return path;
 };
 

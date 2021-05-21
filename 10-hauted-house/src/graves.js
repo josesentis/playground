@@ -3,7 +3,7 @@ import * as THREE from 'three';
 const generateAngle = () => {
   const angle = Math.random() * Math.PI * 2;
 
-  if (angle < 0.17 || angle > 6.1) generateAngle();
+  if (angle < 0.26 || angle > 6.02) generateAngle();
   else return angle;
 };
 
