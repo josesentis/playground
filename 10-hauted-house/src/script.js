@@ -172,28 +172,6 @@ bush5.position.set(-1.25, 0.05, 2.95);
 
 house.add(bush1, bush2, bush3, bush4, bush5);
 
-// Path
-const path = new THREE.Group();
-scene.add(path);
-
-const pathWay = new THREE.Mesh(
-  new THREE.PlaneGeometry(1.4, 20),
-  new THREE.MeshStandardMaterial({ color: '#ff0000' })
-  // new THREE.MeshStandardMaterial({
-  //   map: grassColorTexture,
-  //   aoMap: grassAmbientOcclusionTexture,
-  //   normalMap: grassNormalTexture,
-  //   roughnessMap: grassRoughnessTexture
-  // })
-)
-// pathWay.geometry.setAttribute(
-//   'uv2',
-//   new THREE.Float32BufferAttribute(pathWay.geometry.attributes.uv.array, 2)
-// );
-pathWay.rotation.x = - Math.PI * 0.5;
-pathWay.position.y = 0.01;
-scene.add(pathWay);
-
 // Graves
 const graves = new THREE.Group();
 scene.add(graves);
@@ -422,5 +400,8 @@ const tick = () => {
   window.requestAnimationFrame(tick);
 }
 
-createPath();
+// Add elements to scene
+const path = createPath();
+scene.add(path);
+
 tick();
