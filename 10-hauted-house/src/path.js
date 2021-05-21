@@ -52,8 +52,8 @@ const createPath = () => {
     cobbleStone.scale.x = ownSize;
     cobbleStone.position.x = ownPosition.x + (ownSize / 2 * rowDirection);
     cobbleStone.position.z = ownPosition.z + 0.1;
-    cobbleStone.rotation.x = (Math.random() - 0.5) * 0.1;
-    cobbleStone.rotation.z = (Math.random() - 0.5) * 0.1;
+    cobbleStone.rotation.x = (Math.random() - 0.5) * 0.15;
+    cobbleStone.rotation.z = (Math.random() - 0.5) * 0.15;
     cobbleStone.castShadow = true;
 
     if (cobbleStone.position.z + COBBLE_Z >= MAX_PATH_LENGTH) lastRow = true;

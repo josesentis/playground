@@ -1,5 +1,7 @@
 import * as THREE from 'three';
 
+const names = ['Amelia', 'Margaret', 'Emma', 'Mary', 'Olivia', 'Samantha', 'Olivia', 'Patricia', 'Isla', 'Bethany', 'Sophia', 'Jennifer', 'Emily', 'Elizabeth', 'Isabella', 'Elizabeth', 'Poppy', 'Joanne', 'Ava', 'Linda', 'Ava', 'Megan', 'Mia', 'Barbara', 'Isabella', 'Victoria', 'Emily', 'Susan', 'Jessica', 'Lauren', 'Abigail', 'Margaret', 'Lily', 'Michelle', 'Madison', 'Jessica', 'Sophie', 'Tracy', 'Charlotte', 'Sarah'];
+
 const generateAngle = () => {
   const angle = Math.random() * Math.PI * 2;
 
