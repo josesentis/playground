@@ -44,7 +44,7 @@ const createGraves = () => {
   // Adds graves
   for (let i = 0; i < 35; i++) {
     const angle = generateAngle();
-    const radius = 4.5 + Math.random() * 5.5;
+    const radius = 4.5 + Math.random() * 5;
     const x = Math.sin(angle) * radius;
     const y = 0.3 + Math.random() * 0.1;
     const z = Math.cos(angle) * radius;

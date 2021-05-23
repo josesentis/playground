@@ -1,20 +1,25 @@
 import * as THREE from 'three';
 
-const poleGeometry = new THREE.BoxGeometry(0.2, 1, 0.2);
+const poleGeometry = new THREE.BoxGeometry(1, 1, 1);
 const poleMaterial = new THREE.MeshStandardMaterial({ color: '#ffffff' });
 const tiangleGeometry = new THREE.ConeGeometry(0.2, 0.2, 4);
 const tiangleMaterial = new THREE.MeshStandardMaterial({ color: '#ffffff' });
 
-// Roof
-// const roof = new THREE.Mesh(
-// );
-// roof.position.y = 1.5 / 2 + 3;
-// roof.rotation.y = Math.PI / 4;
-// house.add(roof);
+const createLateral = () => {
+  const lateral = new THREE.Mesh(poleGeometry, poleMaterial);
+  lateral.scale.x = 20 - 0.75;
+  lateral.scale.y = 0.15;
+  lateral.scale.z = 0.1;
+
+  return lateral;
+};
 
 const createPole = (x = 1, y = 1, z = 1) => {
   const poleGroup = new THREE.Group();
   const pole = new THREE.Mesh(poleGeometry, poleMaterial);
+  pole.scale.x = 0.2 * x;
+  pole.scale.y = y;
+  pole.scale.z = 0.2 * z;
   pole.position.y = 1 / 2;
   pole.castShadow = true;
 
@@ -58,6 +63,40 @@ const createFence = () => {
   cornerPole4.position.z = - (20 - 0.75) / 2;
 
   fence.add(frontPole1, frontPole2, cornerPole1, cornerPole2, cornerPole3, cornerPole4);
+
+  const lateral1Top = createLateral();
+  lateral1Top.position.x = - (20 - 0.75) / 2;
+  lateral1Top.position.y = 0.7;
+  lateral1Top.rotation.y = Math.PI / 2;
+
+  const lateral1Bottom = createLateral();
+  lateral1Bottom.position.x = - (20 - 0.75) / 2;
+  lateral1Bottom.position.y = 0.4;
+  lateral1Bottom.rotation.y = Math.PI / 2;
+
+  fence.add(lateral1Top, lateral1Bottom);
+
+  const lateral2Top = createLateral();
+  lateral2Top.position.z = - (20 - 0.75) / 2;
+  lateral2Top.position.y = 0.7;
+
+  const lateral2Bottom = createLateral();
+  lateral2Bottom.position.z = - (20 - 0.75) / 2;
+  lateral2Bottom.position.y = 0.4;
+
+  fence.add(lateral2Top, lateral2Bottom);
+
+  const lateral3Top = createLateral();
+  lateral3Top.position.x = (20 - 0.75) / 2;
+  lateral3Top.position.y = 0.7;
+  lateral3Top.rotation.y = Math.PI / 2;
+
+  const lateral3Bottom = createLateral();
+  lateral3Bottom.position.x = (20 - 0.75) / 2;
+  lateral3Bottom.position.y = 0.4;
+  lateral3Bottom.rotation.y = Math.PI / 2;
+
+  fence.add(lateral3Top, lateral3Bottom);
 
   return fence;
 };
