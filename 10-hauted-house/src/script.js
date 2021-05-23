@@ -3,6 +3,7 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import * as dat from 'dat.gui';
 
 import './style.css';
+import createFence from './fence';
 import createPath from './path';
 import createGhosts from './ghosts';
 import createGraves from './graves';
@@ -95,7 +96,7 @@ const walls = new THREE.Mesh(
     normalMap: bricksNormalTexture,
     roughnessMap: bricksRoughnessTexture
   })
-)
+);
 walls.geometry.setAttribute(
   'uv2',
   new THREE.Float32BufferAttribute(walls.geometry.attributes.uv.array, 2)
@@ -178,8 +179,14 @@ house.add(bush1, bush2, bush3, bush4, bush5);
 /**
  * Graves
  */
-const graves = createGraves()
+const graves = createGraves();
 scene.add(graves);
+
+/**
+ * Fence
+ */
+const fence = createFence();
+scene.add(fence);
 
 /**
  * Lights
@@ -246,12 +253,12 @@ window.addEventListener('resize', () => {
  */
 // Base camera
 const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 100);
-camera.position.x = 3;
+// camera.position.x = 3;
+// camera.position.y = 3;
+// camera.position.z = 8;
+camera.position.x = 5;
 camera.position.y = 3;
-camera.position.z = 8;
-// camera.position.x = 0;
-// camera.position.y = 2;
-// camera.position.z = 0;
+camera.position.z = 14;
 scene.add(camera);
 
 // Controls
