@@ -98,6 +98,34 @@ const createFence = () => {
 
   fence.add(lateral3Top, lateral3Bottom);
 
+  const lateral4Top = createLateral();
+  lateral4Top.position.x = - 5.6;
+  lateral4Top.position.z = (20 - 0.75) / 2;
+  lateral4Top.position.y = 0.7;
+  lateral4Top.scale.x = 8.2;
+
+  const lateral4Bottom = createLateral();
+  lateral4Bottom.position.x = - 5.6;
+  lateral4Bottom.position.z = (20 - 0.75) / 2;
+  lateral4Bottom.position.y = 0.4;
+  lateral4Bottom.scale.x = 8.2;
+
+  fence.add(lateral4Top, lateral4Bottom);
+
+  const lateral5Top = createLateral();
+  lateral5Top.position.x = 5.6;
+  lateral5Top.position.z = (20 - 0.75) / 2;
+  lateral5Top.position.y = 0.7;
+  lateral5Top.scale.x = 8.2;
+
+  const lateral5Bottom = createLateral();
+  lateral5Bottom.position.x = 5.6;
+  lateral5Bottom.position.z = (20 - 0.75) / 2;
+  lateral5Bottom.position.y = 0.4;
+  lateral5Bottom.scale.x = 8.2;
+
+  fence.add(lateral5Top, lateral5Bottom);
+
   return fence;
 };
 
