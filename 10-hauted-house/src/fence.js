@@ -41,7 +41,23 @@ const createFence = () => {
   frontPole2.position.x = 1.5;
   frontPole2.position.z = (20 - 0.75) / 2;
 
-  fence.add(frontPole1, frontPole2);
+  const cornerPole1 = createPole();
+  cornerPole1.position.x = (20 - 0.75) / 2;
+  cornerPole1.position.z = (20 - 0.75) / 2;
+
+  const cornerPole2 = createPole();
+  cornerPole2.position.x = - (20 - 0.75) / 2;
+  cornerPole2.position.z = (20 - 0.75) / 2;
+
+  const cornerPole3 = createPole();
+  cornerPole3.position.x = - (20 - 0.75) / 2;
+  cornerPole3.position.z = - (20 - 0.75) / 2;
+
+  const cornerPole4 = createPole();
+  cornerPole4.position.x = (20 - 0.75) / 2;
+  cornerPole4.position.z = - (20 - 0.75) / 2;
+
+  fence.add(frontPole1, frontPole2, cornerPole1, cornerPole2, cornerPole3, cornerPole4);
 
   return fence;
 };
