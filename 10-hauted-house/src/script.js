@@ -7,6 +7,7 @@ import createFence from './fence';
 import createPath from './path';
 import createGhosts from './ghosts';
 import createGraves from './graves';
+import createWindows from './windows';
 
 /**
  * Base
@@ -22,8 +23,8 @@ const canvas = document.querySelector('canvas.webgl')
 const scene = new THREE.Scene();
 
 // Fog
-const fog = new THREE.Fog('#262837', 2, 15);
-scene.fog = fog;
+const fog = new THREE.Fog('#262837', 1, 15);
+// scene.fog = fog;
 
 /**
  * Textures
@@ -111,6 +112,10 @@ walls.geometry.setAttribute(
 );
 walls.position.y = 3 / 2;
 house.add(walls);
+
+// Windows
+const { window1, window2, window3 } = createWindows();
+house.add(window1, window2, window3);
 
 // Hall
 const hall = new THREE.Mesh(
