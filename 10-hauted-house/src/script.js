@@ -29,6 +29,7 @@ scene.fog = fog;
  * Textures
  */
 const textureLoader = new THREE.TextureLoader();
+const cubeTextureLoader = new THREE.TextureLoader();
 
 const doorColorTexture = textureLoader.load('/textures/door/color.jpg');
 const doorAlphaTexture = textureLoader.load('/textures/door/alpha.jpg');
@@ -80,9 +81,16 @@ floor.geometry.setAttribute(
   'uv2',
   new THREE.Float32BufferAttribute(floor.geometry.attributes.uv.array, 2)
 );
-floor.rotation.x = - Math.PI * 0.5;
+floor.rotation.x = - Math.PI / 2;
 floor.position.y = 0;
 scene.add(floor);
+
+const floorBox = new THREE.Mesh(
+  new THREE.BoxGeometry(20, 0.8, 20),
+  new THREE.MeshStandardMaterial({ color: '#e0fd62' })
+)
+floorBox.position.y = -0.4001;
+scene.add(floorBox);
 
 const house = new THREE.Group();
 scene.add(house);
