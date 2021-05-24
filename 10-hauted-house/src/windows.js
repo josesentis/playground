@@ -23,6 +23,13 @@ const createWindows = () => {
   // window1.position.z = 2.01;
   window1.rotation.y = Math.PI / 2;
 
+  window2.position.z = -2.01;
+  // window1.position.z = 2.01;
+  window2.rotation.y = Math.PI;
+
+  window3.position.x = -2.01;
+  // window3.position.z = 2.01;
+  window3.rotation.y = - Math.PI / 2;
   /**
    * Shadows
    */
