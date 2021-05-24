@@ -46,6 +46,26 @@ const createFence = () => {
   frontPole2.position.x = 1.5;
   frontPole2.position.z = (20 - 0.75) / 2;
 
+  fence.add(frontPole1, frontPole2);
+
+  // Sticks
+  for (let i = 0; i < 19; i++) {
+    const stick = createPole(1, 1, 0.2);
+    stick.position.x = -2 - i * 0.4;
+    stick.position.z = (20 - 0.75) / 2;
+
+    fence.add(stick);
+  }
+
+  for (let i = 0; i < 19; i++) {
+    const stick = createPole(1, 1, 0.2);
+    stick.position.x = 2 + i * 0.4;
+    stick.position.z = (20 - 0.75) / 2;
+
+    fence.add(stick);
+  }
+
+  // Poles
   const cornerPole1 = createPole();
   cornerPole1.position.x = (20 - 0.75) / 2;
   cornerPole1.position.z = (20 - 0.75) / 2;
@@ -53,6 +73,16 @@ const createFence = () => {
   const cornerPole2 = createPole();
   cornerPole2.position.x = - (20 - 0.75) / 2;
   cornerPole2.position.z = (20 - 0.75) / 2;
+
+  // Sticks
+  for (let i = 0; i < 47; i++) {
+    const stick = createPole(1, 1, 0.2);
+    stick.position.x = (20 - 0.75) / 2;
+    stick.position.z = ((20 - 0.75) / 2) - (i + 1) * 0.4;
+    stick.rotation.y = Math.PI / 2;
+
+    fence.add(stick);
+  }
 
   const cornerPole3 = createPole();
   cornerPole3.position.x = - (20 - 0.75) / 2;
@@ -62,7 +92,7 @@ const createFence = () => {
   cornerPole4.position.x = (20 - 0.75) / 2;
   cornerPole4.position.z = - (20 - 0.75) / 2;
 
-  fence.add(frontPole1, frontPole2, cornerPole1, cornerPole2, cornerPole3, cornerPole4);
+  fence.add(cornerPole1, cornerPole2, cornerPole3, cornerPole4);
 
   const lateral1Top = createLateral();
   lateral1Top.position.x = - (20 - 0.75) / 2;
