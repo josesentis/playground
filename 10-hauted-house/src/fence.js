@@ -37,7 +37,7 @@ const createPole = (x = 1, y = 1, z = 1) => {
 const createFence = () => {
   const fence = new THREE.Group();
 
-  // pole
+  // poles front side
   const frontPole1 = createPole();
   frontPole1.position.x = -1.5;
   frontPole1.position.z = (20 - 0.75) / 2;
@@ -48,7 +48,7 @@ const createFence = () => {
 
   fence.add(frontPole1, frontPole2);
 
-  // Sticks
+  // Sticks front side
   for (let i = 0; i < 19; i++) {
     const stick = createPole(1, 1, 0.2);
     stick.position.x = -2 - i * 0.4;
@@ -65,7 +65,7 @@ const createFence = () => {
     fence.add(stick);
   }
 
-  // Poles
+  // Poles right size
   const cornerPole1 = createPole();
   cornerPole1.position.x = (20 - 0.75) / 2;
   cornerPole1.position.z = (20 - 0.75) / 2;
@@ -74,7 +74,9 @@ const createFence = () => {
   cornerPole2.position.x = - (20 - 0.75) / 2;
   cornerPole2.position.z = (20 - 0.75) / 2;
 
-  // Sticks
+  fence.add(cornerPole1, cornerPole2);
+
+  // Sticks right side
   for (let i = 0; i < 47; i++) {
     const stick = createPole(1, 1, 0.2);
     stick.position.x = (20 - 0.75) / 2;
@@ -84,6 +86,7 @@ const createFence = () => {
     fence.add(stick);
   }
 
+  // Poles Back side
   const cornerPole3 = createPole();
   cornerPole3.position.x = - (20 - 0.75) / 2;
   cornerPole3.position.z = - (20 - 0.75) / 2;
@@ -92,8 +95,29 @@ const createFence = () => {
   cornerPole4.position.x = (20 - 0.75) / 2;
   cornerPole4.position.z = - (20 - 0.75) / 2;
 
-  fence.add(cornerPole1, cornerPole2, cornerPole3, cornerPole4);
+  fence.add(cornerPole3, cornerPole4);
 
+  // Sticks back side
+  for (let i = 0; i < 47; i++) {
+    const stick = createPole(1, 1, 0.2);
+    stick.position.x = ((20 - 0.75) / 2) - (i + 1) * 0.4;
+    stick.position.z = - (20 - 0.75) / 2;
+    // stick.rotation.y = Math.PI / 2;
+
+    fence.add(stick);
+  }
+
+  // Sticks left side
+  for (let i = 0; i < 47; i++) {
+    const stick = createPole(1, 1, 0.2);
+    stick.position.x = - (20 - 0.75) / 2;
+    stick.position.z = ((20 - 0.75) / 2) - (i + 1) * 0.4;
+    stick.rotation.y = Math.PI / 2;
+
+    fence.add(stick);
+  }
+
+  // Fence bars
   const lateral1Top = createLateral();
   lateral1Top.position.x = - (20 - 0.75) / 2;
   lateral1Top.position.y = 0.7;
