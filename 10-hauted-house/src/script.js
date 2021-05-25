@@ -30,7 +30,6 @@ const fog = new THREE.Fog('#262837', 1, 15);
  * Textures
  */
 const textureLoader = new THREE.TextureLoader();
-const cubeTextureLoader = new THREE.TextureLoader();
 
 const doorColorTexture = textureLoader.load('/textures/door/color.jpg');
 const doorAlphaTexture = textureLoader.load('/textures/door/alpha.jpg');
@@ -269,9 +268,9 @@ const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 
 // camera.position.x = 3;
 // camera.position.y = 3;
 // camera.position.z = 8;
-camera.position.x = 5;
-camera.position.y = 3;
-camera.position.z = 14;
+camera.position.x = 6;
+camera.position.y = 2;
+camera.position.z = 0;
 scene.add(camera);
 
 // Controls
