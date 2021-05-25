@@ -37,7 +37,7 @@ const loader = new THREE.LoadingManager();
  * Textures
  */
 const textureLoader = new THREE.TextureLoader(loader);
-const matcapTexture = textureLoader.load('/textures/matcaps/7.png');
+const matcapTexture = textureLoader.load('textures/matcaps/7.png');
 
 /**
  * Mesh

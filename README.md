@@ -6,7 +6,7 @@
 <h2>Drops</h2>
 
 * [10-haunted-house (05/2021)](https://josesentis.github.io/playground/10-haunted-house/dist/)
-* [09-3d-text (05/2021)](https://josesentis.github.io/playground/09-3D-scene/dist/)
+* [09-3d-text (05/2021)](https://josesentis.github.io/playground/09-3D-text/dist/)
 * [08-text-extrusion-animation (04/2021)](https://josesentis.github.io/playground/08-text-extrusion-animation/)
 * [07-gravity-smiley (05/2020)](https://josesentis.github.io/playground/07-gravity-smiley/)
 * [06-bouncing-smiley (05/2020)](https://josesentis.github.io/playground/06-bouncing-smiley/)
