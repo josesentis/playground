@@ -3,8 +3,8 @@ import * as THREE from 'three';
 const windowGeometry = new THREE.PlaneGeometry(1.5, 1);
 const windowMaterial = new THREE.MeshStandardMaterial({ color: '#26323f' });
 
-const woodGeometry = new THREE.BoxGeometry(1.6, 0.15, 0.1);
-const woodMaterial = new THREE.MeshStandardMaterial({ color: '#c07e47' });
+const woodGeometry = new THREE.BoxGeometry(1.6, 0.15, 0.05);
+const woodMaterial = new THREE.MeshStandardMaterial({ color: '#9e6839' });
 
 const createWindow = () => {
   const fenetre = new THREE.Group();
@@ -23,6 +23,15 @@ const createWindow = () => {
 
     woods.add(wood);
   }
+
+  const crossWood = new THREE.Mesh(woodGeometry, woodMaterial);
+
+  crossWood.position.y = 0.4;
+  crossWood.position.z = 0.06;
+  crossWood.rotation.z = Math.PI / 4;
+  crossWood.castShadow = true;
+
+  woods.add(crossWood);
 
   woods.position.y = -0.4;
   woods.position.z = 0.01;
