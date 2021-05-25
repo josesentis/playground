@@ -1,6 +1,7 @@
 import * as THREE from 'three';
+import gsap from 'gsap';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
-import * as dat from 'dat.gui';
+// import * as dat from 'dat.gui';
 
 import './style.css';
 import createFence from './fence';
@@ -13,8 +14,8 @@ import createWindows from './windows';
  * Base
  */
 // Debug
-const gui = new dat.GUI()
-gui.closed = true;
+// const gui = new dat.GUI()
+// gui.closed = true;
 
 // Canvas
 const canvas = document.querySelector('canvas.webgl')
@@ -24,7 +25,7 @@ const scene = new THREE.Scene();
 
 // Fog
 const fog = new THREE.Fog('#262837', 1, 15);
-// scene.fog = fog;
+scene.fog = fog;
 
 /**
  * Textures
@@ -205,17 +206,17 @@ scene.add(fence);
  */
 // Ambient light
 const ambientLight = new THREE.AmbientLight('#BB91F2', 0.15);
-gui.add(ambientLight, 'intensity').min(0).max(1).step(0.001);
+// gui.add(ambientLight, 'intensity').min(0).max(1).step(0.001);
 scene.add(ambientLight);
 
 // Directional light
 // const moonLight = new THREE.DirectionalLight('#BB91F2', 0.15);
 const moonLight = new THREE.DirectionalLight('#FFFFFF', 1);
 moonLight.position.set(4, 5, - 2);
-gui.add(moonLight, 'intensity').min(0).max(1).step(0.001);
-gui.add(moonLight.position, 'x').min(- 5).max(5).step(0.001);
-gui.add(moonLight.position, 'y').min(- 5).max(5).step(0.001);
-gui.add(moonLight.position, 'z').min(- 5).max(5).step(0.001);
+// gui.add(moonLight, 'intensity').min(0).max(1).step(0.001);
+// gui.add(moonLight.position, 'x').min(- 5).max(5).step(0.001);
+// gui.add(moonLight.position, 'y').min(- 5).max(5).step(0.001);
+// gui.add(moonLight.position, 'z').min(- 5).max(5).step(0.001);
 scene.add(moonLight);
 
 // Door light
@@ -265,17 +266,18 @@ window.addEventListener('resize', () => {
  */
 // Base camera
 const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 100);
-// camera.position.x = 3;
-// camera.position.y = 3;
-// camera.position.z = 8;
-camera.position.x = 6;
-camera.position.y = 2;
-camera.position.z = 0;
+camera.position.x = 3;
+camera.position.y = 3;
+camera.position.z = 8;
 scene.add(camera);
 
 // Controls
 const controls = new OrbitControls(camera, canvas);
 controls.enableDamping = true;
+controls.enableZoom = false;
+controls.enablePan = false;
+controls.minPolarAngle = Math.PI / 3;
+controls.maxPolarAngle = Math.PI / 3;
 
 /**
  * Renderer
@@ -312,6 +314,19 @@ doorLight.shadow.camera.far = 7;
 // Add elements to scene
 const path = createPath();
 scene.add(path);
+
+/**
+ * Cursor
+ */
+const cursor = {
+  x: 0,
+  y: 0
+};
+
+window.addEventListener('mousemove', event => {
+  cursor.x = event.clientX / window.innerWidth - 0.5;
+  cursor.y = - (event.clientY / window.innerHeight - 0.5);
+});
 
 /**
  * Animate
